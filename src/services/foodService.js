@@ -2,24 +2,35 @@ import AxiosClient from "./axiosClient";
 
 export default class FoodService {
   constructor() {
-    this.client = new AxiosClient(
-      "http://127.0.0.1:8080/lodealdi-api/v1/food/pizza",
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    );
+    this.client = new AxiosClient();
   }
 
-  async getFoods(options) {
-    const { convertDataToString } = options;
-    const response = await this.client.makeGetRequest();
-    let data = response.data;
-    if (convertDataToString) {
-      data = JSON.stringify(data);
+  async getFoodByType(type) {
+    const requestConfig = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    const response = await this.client.makeGetRequest(
+      `food/${type}`,
+      requestConfig
+    );
+    return JSON.stringify(response.data);
+  }
+
+  async getTypes(options) {
+    const { toString } = options ? options : false;
+    const requestConfig = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    const response = await this.client.makeGetRequest("type", requestConfig);
+    if (toString) {
+      return response.data.payload;
     }
-    return data;
+    return JSON.parse(response.data.payload);
   }
 }
