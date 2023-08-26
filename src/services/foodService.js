@@ -5,7 +5,8 @@ export default class FoodService {
     this.client = new AxiosClient();
   }
 
-  async getFoodByType(type) {
+  async getFoodByType(type, options) {
+    const { toString } = options ? options : false;
     const requestConfig = {
       headers: {
         "Content-Type": "application/json",
@@ -16,7 +17,10 @@ export default class FoodService {
       `food/${type}`,
       requestConfig
     );
-    return JSON.stringify(response.data);
+    if (toString) {
+      return response.data.payload;
+    }
+    return JSON.parse(response.data.payload);
   }
 
   async getTypes(options) {

@@ -1,13 +1,9 @@
-import NavBar from "./components/admin/NavBar";
-
-import "./App.css";
+import AdminPage from "./components/admin/AdminPage";
 
 function App() {
   return (
     <>
-      <header>
-        <NavBar />
-      </header>
+      <AdminPage />
     </>
   );
 }
