@@ -1,4 +1,4 @@
-import AdminPage from "./components/admin/AdminPage";
+import AdminPage from "./components/admin-components/AdminPage";
 
 function App() {
   return (
