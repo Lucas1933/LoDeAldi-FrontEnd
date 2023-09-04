@@ -6,7 +6,7 @@ function useDisplayFoodTypes(): FoodTypeData[] {
   useEffect(() => {
     async function getTypes() {
       const obtainedTypes = await foodTypeService.getFoodTypes();
-      console.log(obtainedTypes);
+
       setTypes(obtainedTypes);
     }
     getTypes();

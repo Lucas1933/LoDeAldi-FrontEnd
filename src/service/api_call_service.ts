@@ -6,7 +6,6 @@ export default class ApiCallService {
 
   async getPayload<T>(param?: string): Promise<T | null> {
     try {
-      console.log(this.URL + (param ? param : ""));
       const response = await fetch(this.URL + (param ? param : ""));
       if (!response.ok) {
         // Handle non-OK responses, e.g., by throwing an error or returning null
