@@ -13,7 +13,7 @@ export default class FoodService {
   private api: ApiCallService;
   constructor() {
     this.api = new ApiCallService(
-      "http://127.0.0.1:8080/lodealdi-api/v1/food/"
+      import.meta.env.VITE_LO_DE_ALDI_API + "food/"
     );
   }
 

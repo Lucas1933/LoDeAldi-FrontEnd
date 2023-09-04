@@ -10,7 +10,7 @@ export default class FoodTypeService {
   private api: ApiCallService;
   constructor() {
     this.api = new ApiCallService(
-      "http://127.0.0.1:8080/lodealdi-api/v1/type/"
+      import.meta.env.VITE_LO_DE_ALDI_API + "type/"
     );
   }
 
