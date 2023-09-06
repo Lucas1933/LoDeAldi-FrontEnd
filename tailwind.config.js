@@ -4,9 +4,14 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/tw-elements-react/dist/js/**/*.js",
+    "./node_modules/tw-elements/dist/js/**/*.js",
   ],
   theme: {
     extend: {},
   },
-  plugins: [import("tw-elements-react/dist/plugin.cjs")],
+  darkMode: "class",
+  plugins: [
+    import("tw-elements-react/dist/plugin.cjs"),
+    import("tw-elements/dist/plugin.cjs"),
+  ],
 };
