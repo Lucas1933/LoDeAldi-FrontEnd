@@ -1,24 +1,38 @@
 import { useState } from "react";
-import FoodCard from "./FoodCard";
-import Modal from "./tailwind_elements/Modal";
+import FoodCardLister from "./FoodCardLister";
+import CreateAndEditModalForm from "./tailwind_elements/CreateAndEditModalForm";
+import CreationButtonsContainer from "./CreationButtonsContainer";
+import { FormProps } from "./tailwind_elements/Form";
+
 interface MainProps {
   selectedFoodType: string;
 }
+const initialModalData: FormProps = {
+  newFood: false,
+  newFoodType: false,
+  toBeEditedFood: undefined,
+  toBeEditedFoodType: undefined,
+};
+
 function Main({ selectedFoodType }: MainProps) {
   const [displayModal, setDisplayModal] = useState(false);
-  const handleDisplayModal = (displayModal: boolean) => {
-    setDisplayModal(displayModal);
-  };
+  const [modalData, setModalData] = useState<FormProps>(initialModalData);
   return (
     <>
       <main>
-        <FoodCard
-          selectedFoodType={selectedFoodType}
-          handleDisplayModal={handleDisplayModal}
+        <CreationButtonsContainer
+          handleDisplayModal={setDisplayModal}
+          handleModalData={setModalData}
         />
-        <Modal
-          handleDisplayModal={handleDisplayModal}
+        <FoodCardLister
+          selectedFoodType={selectedFoodType}
+          handleDisplayModal={setDisplayModal}
+          handleModalData={setModalData}
+        />
+        <CreateAndEditModalForm
+          handleDisplayModal={setDisplayModal}
           displayModal={displayModal}
+          modalData={modalData}
         />
       </main>
     </>

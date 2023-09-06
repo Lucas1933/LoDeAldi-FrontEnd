@@ -1,3 +1,4 @@
+import Form, { FormProps } from "./Form";
 import { useState, useEffect } from "react";
 import {
   TERipple,
@@ -9,14 +10,16 @@ import {
   TEModalFooter,
 } from "tw-elements-react";
 
-interface ModalProps {
-  handleDisplayModal(displayModal: boolean): void;
+interface CreateAndEditModalFormProps {
   displayModal: boolean;
+  modalData: FormProps;
+  handleDisplayModal(displayModal: boolean): void;
 }
-export default function Modal({
+function CreateAndEditModalForm({
   handleDisplayModal,
   displayModal,
-}: ModalProps) {
+  modalData,
+}: CreateAndEditModalFormProps) {
   const [showModal, setShowModal] = useState(displayModal);
   useEffect(() => {
     setShowModal(displayModal);
@@ -33,10 +36,6 @@ export default function Modal({
         <TEModalDialog>
           <TEModalContent>
             <TEModalHeader>
-              {/* <!--Modal title--> */}
-              <h5 className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200">
-                Modal title
-              </h5>
               {/* <!--Close button--> */}
               <button
                 type="button"
@@ -62,14 +61,7 @@ export default function Modal({
             </TEModalHeader>
             {/* <!--Modal body--> */}
             <TEModalBody>
-              <p>
-                This is some placeholder content to show the scrolling behavior
-                for modals. We use repeated line breaks to demonstrate how
-                content can exceed minimum inner height, thereby showing inner
-                scrolling. When content becomes longer than the predefined
-                max-height of modal, content will be cropped and scrollable
-                within the modal.
-              </p>
+              <Form {...modalData} />
             </TEModalBody>
             <TEModalFooter>
               <TERipple rippleColor="light">
@@ -96,3 +88,5 @@ export default function Modal({
     </div>
   );
 }
+
+export default CreateAndEditModalForm;

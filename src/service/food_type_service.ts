@@ -6,6 +6,10 @@ export interface FoodTypeData {
   type: string;
 }
 
+export interface CreateFoodTypeData {
+  type: string;
+}
+
 export default class FoodTypeService {
   private api: ApiCallService;
   constructor() {

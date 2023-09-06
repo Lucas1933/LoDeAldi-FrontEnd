@@ -20,4 +20,28 @@ export default class ApiCallService {
       return null; // Return null or handle the error as appropriate
     }
   }
+
+  async deleteResource(_id: string): Promise<boolean> {
+    const response = await fetch(this.URL + _id);
+    if (!response.ok) {
+      // Handle non-OK responses, e.g., by throwing an error or returning null
+      throw new Error(`Failed to fetch data from ${this.URL}`);
+    }
+    return true;
+  }
+
+  async createResource<T>(resourceBody: T): Promise<boolean> {
+    const response = await fetch(this.URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Modify this header if needed
+      },
+      body: JSON.stringify(resourceBody),
+    });
+    if (!response.ok) {
+      // Handle non-OK responses, e.g., by throwing an error or returning null
+      throw new Error(`Failed to fetch data from ${this.URL}`);
+    }
+    return true;
+  }
 }
