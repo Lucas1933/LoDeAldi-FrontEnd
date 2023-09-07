@@ -15,6 +15,7 @@ export default function Form({
     if (foodToBeEdited) {
       setFormInputData(foodToBeEdited);
     }
+    return () => setFormInputData(undefined);
   }, [foodToBeEdited]);
   console.log(formInputData);
   const foodTypes = useDisplayFoodTypes();
