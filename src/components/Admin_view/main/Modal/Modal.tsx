@@ -1,4 +1,4 @@
-import Form, { FormProps } from "./Form";
+import Form from "./Form";
 import { useState, useEffect } from "react";
 import {
   TERipple,
@@ -10,16 +10,7 @@ import {
   TEModalFooter,
 } from "tw-elements-react";
 
-interface CreateAndEditModalFormProps {
-  displayModal: boolean;
-  modalData: FormProps;
-  handleDisplayModal(displayModal: boolean): void;
-}
-function CreateAndEditModalForm({
-  handleDisplayModal,
-  displayModal,
-  modalData,
-}: CreateAndEditModalFormProps) {
+function Modal({ handleDisplayModal, displayModal, modalData }: ModalProps) {
   const [showModal, setShowModal] = useState(displayModal);
   useEffect(() => {
     setShowModal(displayModal);
@@ -89,4 +80,4 @@ function CreateAndEditModalForm({
   );
 }
 
-export default CreateAndEditModalForm;
+export default Modal;

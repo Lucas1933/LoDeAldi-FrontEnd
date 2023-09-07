@@ -1,8 +1,6 @@
-import useDisplayFoodTypes from "../hooks/use_display_food_types";
-import Nav from "./tailwind_elements/Nav";
-interface NavBarProps {
-  updateSelectedFoodType(foodType: string): void;
-}
+import useDisplayFoodTypes from "../../../hooks/use_display_food_types";
+import Nav from "./Nav";
+
 function NavBar({ updateSelectedFoodType }: NavBarProps) {
   const foodTypes = useDisplayFoodTypes();
   return (

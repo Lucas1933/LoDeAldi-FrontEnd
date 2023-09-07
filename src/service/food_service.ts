@@ -1,20 +1,5 @@
 import ApiCallService from "./api_call_service";
-// Define a specific interface for the expected data structure
-export interface FoodData {
-  _id: string;
-  name: string;
-  price: number;
-  description: string;
-  thumbnails: string[];
-  type: string;
-}
-export interface CreateFoodData {
-  name: string;
-  price: number;
-  description: string;
-  /* thumbnails: string[]; to do*/
-  type: string;
-}
+
 export default class FoodService {
   private api: ApiCallService;
   constructor() {
@@ -32,8 +17,13 @@ export default class FoodService {
     return result;
   }
 
-  async createFood(food: CreateFoodData): Promise<boolean> {
+  async createFood(food: FoodDataForInsertion): Promise<boolean> {
     const result = await this.api.createResource(food);
+    return result;
+  }
+
+  async updateFood(food: FoodData): Promise<boolean> {
+    const result = await this.api.updateResource(food);
     return result;
   }
 }

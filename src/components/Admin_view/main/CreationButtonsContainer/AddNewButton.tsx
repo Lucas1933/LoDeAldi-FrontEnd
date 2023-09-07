@@ -1,13 +1,3 @@
-import { FormProps } from "./tailwind_elements/Form";
-
-interface AddNewButtonProps {
-  actionText: string;
-  icon: string;
-  modalData: FormProps;
-  handleModalData(modalData: FormProps): void;
-  handleDisplayModal(displayModal: boolean): void;
-}
-
 function AddNewButton({
   actionText,
   icon,

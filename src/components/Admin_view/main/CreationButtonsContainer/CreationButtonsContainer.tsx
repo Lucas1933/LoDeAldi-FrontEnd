@@ -1,12 +1,7 @@
 import AddNewButton from "./AddNewButton";
-import addComboIcon from "../assets/add_combo_icon.svg";
-import addFoodIcon from "../assets/add_food_icon.svg";
-import addTypeIcon from "../assets/add_type_icon.svg";
-import { FormProps } from "./tailwind_elements/Form";
-interface CreationButtonsContainerProps {
-  handleDisplayModal(displayModal: boolean): void;
-  handleModalData(modalData: FormProps): void;
-}
+import addFoodIcon from "../../../../assets/add_food_icon.svg";
+import addTypeIcon from "../../../../assets/add_type_icon.svg";
+
 function CreationButtonsContainer({
   handleDisplayModal,
   handleModalData,
@@ -22,15 +17,7 @@ function CreationButtonsContainer({
         handleDisplayModal={handleDisplayModal}
         handleModalData={handleModalData}
       />
-      <AddNewButton
-        actionText="Añadir combo"
-        icon={addComboIcon}
-        modalData={{
-          newCombo: true,
-        }}
-        handleDisplayModal={handleDisplayModal}
-        handleModalData={handleModalData}
-      />
+
       <AddNewButton
         actionText="Añadir categoria"
         icon={addTypeIcon}

@@ -1,12 +1,5 @@
-import useDisplayFood from "../hooks/use_display_food";
-import FoodCard from "./tailwind_elements/FoodCard";
-import { FormProps } from "./tailwind_elements/Form";
-
-interface FoodCardListerProps {
-  selectedFoodType: string;
-  handleDisplayModal(displayModal: boolean): void;
-  handleModalData(modalData: FormProps): void;
-}
+import useDisplayFood from "../../../../hooks/use_display_food";
+import FoodCard from "./FoodCard";
 
 function FoodCardLister({
   selectedFoodType,

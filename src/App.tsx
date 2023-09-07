@@ -1,4 +1,4 @@
-import AdminView from "./components/AdminView";
+import AdminView from "./components/Admin_view/AdminView";
 function App() {
   return (
     <>

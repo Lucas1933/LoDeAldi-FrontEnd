@@ -1,22 +1,11 @@
 import { useState } from "react";
-import FoodCardLister from "./FoodCardLister";
-import CreateAndEditModalForm from "./tailwind_elements/CreateAndEditModalForm";
-import CreationButtonsContainer from "./CreationButtonsContainer";
-import { FormProps } from "./tailwind_elements/Form";
-
-interface MainProps {
-  selectedFoodType: string;
-}
-const initialModalData: FormProps = {
-  newFood: false,
-  newFoodType: false,
-  toBeEditedFood: undefined,
-  toBeEditedFoodType: undefined,
-};
+import FoodCardLister from "./FoodCardLister/FoodCardLister";
+import Modal from "./Modal/Modal";
+import CreationButtonsContainer from "./CreationButtonsContainer/CreationButtonsContainer";
 
 function Main({ selectedFoodType }: MainProps) {
   const [displayModal, setDisplayModal] = useState(false);
-  const [modalData, setModalData] = useState<FormProps>(initialModalData);
+  const [modalData, setModalData] = useState<ModalProps>();
   return (
     <>
       <main>
@@ -29,10 +18,10 @@ function Main({ selectedFoodType }: MainProps) {
           handleDisplayModal={setDisplayModal}
           handleModalData={setModalData}
         />
-        <CreateAndEditModalForm
+        <Modal
           handleDisplayModal={setDisplayModal}
           displayModal={displayModal}
-          modalData={modalData}
+          modalData={modalData!}
         />
       </main>
     </>

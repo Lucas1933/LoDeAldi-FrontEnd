@@ -1,11 +1,5 @@
 import { TERipple } from "tw-elements-react";
-import { FoodData } from "../../service/food_service";
-import { FormProps } from "./Form";
-interface FoodCardProps {
-  food: FoodData;
-  handleDisplayModal(displayModal: boolean): void;
-  handleModalData(modalData: FormProps): void;
-}
+
 function FoodCard({
   food,
   handleDisplayModal,
@@ -27,7 +21,7 @@ function FoodCard({
         <button
           onClick={() => {
             handleModalData({
-              toBeEditedFood: food,
+              foodToBeEdited: food,
             });
             handleDisplayModal(true);
           }}
