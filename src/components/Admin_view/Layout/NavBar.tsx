@@ -1,20 +1,28 @@
-import useDisplayFoodTypes from "@hooks/use_display_food_types";
-import { useEffect } from "react";
+import { useEffect, useState, memo } from "react";
 import { Collapse, Dropdown, initTE } from "tw-elements";
+import { foodTypeService } from "@/service";
 
 function NavBar({ updateSelectedFoodType, updateSelectedType }: NavBarProps) {
-  const foodTypes = useDisplayFoodTypes();
+  console.log("navbar rendered");
+  const [foodTypes, setFoodTypes] = useState<FoodTypeData[]>([]);
   const handleFoodTypeSelection = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     const selectedFoodType = event.currentTarget.getAttribute("data-foodtype")!;
     updateSelectedFoodType(selectedFoodType);
   };
+
   useEffect(() => {
     initTE({ Collapse, Dropdown });
+    async function getTypes() {
+      const obtainedTypes = await foodTypeService.getFoodTypes();
+      setFoodTypes(obtainedTypes);
+    }
+    getTypes();
   }, []);
+
   return (
-    <>
+    <header>
       {/* <!-- Main navigation container --> */}
       <nav
         className="relative flex w-full flex-nowrap items-center justify-between bg-[#FBFBFB] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:flex-wrap lg:justify-start lg:py-4"
@@ -63,7 +71,10 @@ function NavBar({ updateSelectedFoodType, updateSelectedType }: NavBarProps) {
                   data-te-nav-item-ref
                 >
                   <button
-                    onClick={handleFoodTypeSelection}
+                    onClick={(event) => {
+                      handleFoodTypeSelection(event);
+                      updateSelectedType(false);
+                    }}
                     data-foodtype={eachType.type}
                     className="p-0 text-neutral-950 transition duration-200 hover:text-neutral-400 hover:ease-in-out focus:text-neutral-400 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
                     data-te-nav-link-ref
@@ -89,9 +100,7 @@ function NavBar({ updateSelectedFoodType, updateSelectedType }: NavBarProps) {
           </div>
         </div>
       </nav>
-    </>
+    </header>
   );
 }
-/* const MemoNavBar = memo(NavBar);
-export default MemoNavBar; */
-export default NavBar;
+export const memoizedNavBar = memo(NavBar);
