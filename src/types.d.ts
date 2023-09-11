@@ -46,7 +46,7 @@ type AddNewButtonProps = {
 
 type CreationButtonsContainerProps = {
   handleDisplayModal(displayModal: boolean): void;
-  handleModalData(modalData: ModalProps): void;
+  handleModalData(modalData: FormProps): void;
 };
 
 type FoodCardProps = {
@@ -58,9 +58,9 @@ type FoodCardProps = {
 type FoodCardListerProps = {
   selectedFoodType: string;
   handleDisplayModal(displayModal: boolean): void;
-  handleModalData(modalData: ModalProps): void;
+  handleModalData(modalData: FormProps): void;
 };
-type ModalProps = FormProps & {
+type ModalProps = {
   displayModal: boolean;
   modalData: FormProps;
   handleDisplayModal(displayModal: boolean): void;
@@ -68,12 +68,33 @@ type ModalProps = FormProps & {
 
 type MainProps = {
   selectedFoodType: string;
+  displayTypes: boolean;
 };
 
 type NavProps = {
   updateSelectedFoodType(foodType: string): void;
+  updateSelectedType(displayTypes: boolean): void;
   foodTypes: FoodTypeData[];
 };
 type NavBarProps = {
   updateSelectedFoodType(foodType: string): void;
+  updateSelectedType(displayTypes: boolean): void;
+};
+
+type TypeListerProps = {
+  handleDisplayModal(displayModal: boolean): void;
+  handleModalData(modalData: FormProps): void;
+};
+type TypeCardProps = {
+  typeProp: FoodTypeData;
+  handleDisplayModal(displayModal: boolean): void;
+  handleModalData(modalData: FormProps): void;
+};
+
+type ListersContainerProps = {
+  selectedFoodType: string;
+  showTypes: boolean;
+  handleDisplayTypes(displayModal: boolean): void;
+  handleDisplayModal(displayModal: boolean): void;
+  handleModalData(modalData: FormProps): void;
 };

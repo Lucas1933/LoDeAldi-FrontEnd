@@ -1,15 +1,15 @@
+import useDisplayFoodTypes from "@hooks/use_display_food_types";
 import { useEffect } from "react";
-
 import { Collapse, Dropdown, initTE } from "tw-elements";
 
-function Nav({ updateSelectedFoodType, foodTypes }: NavProps) {
+function NavBar({ updateSelectedFoodType, updateSelectedType }: NavBarProps) {
+  const foodTypes = useDisplayFoodTypes();
   const handleFoodTypeSelection = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     const selectedFoodType = event.currentTarget.getAttribute("data-foodtype")!;
     updateSelectedFoodType(selectedFoodType);
   };
-
   useEffect(() => {
     initTE({ Collapse, Dropdown });
   }, []);
@@ -72,60 +72,26 @@ function Nav({ updateSelectedFoodType, foodTypes }: NavProps) {
                   </button>
                 </li>
               ))}
+              <li
+                /* className="w-full border-b-2 border-neutral-100 border-opacity-100 py-4 dark:border-opacity-50" */
+                className="mb-4 pl-2 lg:mx-5 lg:mb-0 lg:pl-0 lg:pr-1"
+                data-te-nav-item-ref
+              >
+                <button
+                  onClick={() => updateSelectedType(true)}
+                  className="p-0 text-neutral-950 transition duration-200 hover:text-neutral-400 hover:ease-in-out focus:text-neutral-400 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+                  data-te-nav-link-ref
+                >
+                  Categorias
+                </button>
+              </li>
             </ul>
           </div>
         </div>
       </nav>
-
-      {/* <nav>
-        <div id="accordionExample">
-          <div classNameName="rounded-t-lg border border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800">
-            <h2 classNameName="mb-0" id="headingOne">
-              <button
-                classNameName={`${
-                  activeElement === "element1" &&
-                  `text-primary [box-shadow:inset_0_-1px_0_rgba(229,231,235)] dark:!text-primary-400 dark:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]`
-                } group relative flex w-full items-center rounded-t-[15px] border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-neutral-800 dark:text-white`}
-                type="button"
-                onClick={() => handleClick("element1")}
-                aria-expanded="true"
-                aria-controls="collapseOne"
-              >
-                Menu
-                <span
-                  classNameName={`${
-                    activeElement === "element1"
-                      ? `rotate-[-180deg] -mr-1`
-                      : `rotate-0 fill-[#212529]  dark:fill-white`
-                  } ml-auto h-5 w-5 shrink-0 fill-[#336dec] transition-transform duration-200 ease-in-out motion-reduce:transition-none dark:fill-blue-300`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    classNameName="h-6 w-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                    />
-                  </svg>
-                </span>
-              </button>
-            </h2>
-            <TECollapse
-              show={activeElement === "element1"}
-              classNameName="!mt-0 !rounded-b-none !shadow-none"
-            >
-              <ul classNameName="w-96">{buttonsType}</ul>
-            </TECollapse>
-          </div>
-        </div>
-      </nav> */}
     </>
   );
 }
-export default Nav;
+/* const MemoNavBar = memo(NavBar);
+export default MemoNavBar; */
+export default NavBar;

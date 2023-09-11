@@ -1,29 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FoodCardLister from "./FoodCardLister/FoodCardLister";
+import TypeLister from "./TypeCardLister/TypeLister";
 import Modal from "./Modal/Modal";
 import CreationButtonsContainer from "./CreationButtonsContainer/CreationButtonsContainer";
-
-function Main({ selectedFoodType }: MainProps) {
+function Main({ selectedFoodType, displayTypes }: MainProps) {
   const [displayModal, setDisplayModal] = useState(false);
-  const [modalData, setModalData] = useState<ModalProps>();
+  const [modalData, setModalData] = useState<FormProps>();
+  const [showFoods, setShowFoods] = useState(true);
+  const [showTypes, setShowTypes] = useState(true);
+
   return (
     <>
-      <main>
+      <div>
         <CreationButtonsContainer
           handleDisplayModal={setDisplayModal}
           handleModalData={setModalData}
         />
+      </div>
+      {showFoods && (
         <FoodCardLister
           selectedFoodType={selectedFoodType}
           handleDisplayModal={setDisplayModal}
           handleModalData={setModalData}
         />
-        <Modal
+      )}
+      {showTypes && (
+        <TypeLister
           handleDisplayModal={setDisplayModal}
-          displayModal={displayModal}
-          modalData={modalData!}
+          handleModalData={setModalData}
         />
-      </main>
+      )}
+
+      <Modal
+        handleDisplayModal={setDisplayModal}
+        displayModal={displayModal}
+        modalData={modalData!}
+      />
     </>
   );
 }

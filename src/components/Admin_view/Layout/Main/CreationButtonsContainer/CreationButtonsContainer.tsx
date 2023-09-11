@@ -1,6 +1,6 @@
 import AddNewButton from "./AddNewButton";
-import addFoodIcon from "../../../../assets/add_food_icon.svg";
-import addTypeIcon from "../../../../assets/add_type_icon.svg";
+import addFoodIcon from "@assets/add_food_icon.svg";
+import addTypeIcon from "@assets/add_type_icon.svg";
 
 function CreationButtonsContainer({
   handleDisplayModal,

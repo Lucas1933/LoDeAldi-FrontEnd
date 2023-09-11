@@ -1,4 +1,4 @@
-import useDisplayFood from "../../../../hooks/use_display_food";
+import useDisplayFood from "@hooks/use_display_food";
 import FoodCard from "./FoodCard";
 
 function FoodCardLister({

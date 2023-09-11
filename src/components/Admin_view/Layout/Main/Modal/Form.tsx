@@ -1,8 +1,8 @@
 import { TEInput, TERipple } from "tw-elements-react";
 import { useEffect, useState } from "react";
 
-import useDisplayFoodTypes from "../../../../hooks/use_display_food_types";
-import { foodService, foodTypeService } from "../../../../service";
+import useDisplayFoodTypes from "@hooks/use_display_food_types";
+import { foodService, foodTypeService } from "@service/index.ts";
 
 export default function Form({
   newFood,
@@ -14,14 +14,17 @@ export default function Form({
   useEffect(() => {
     if (foodToBeEdited) {
       setFormInputData(foodToBeEdited);
+    } else if (foodTypeToBeEdited) {
+      setFormInputData(foodTypeToBeEdited as FormInputData);
     }
+
     return () => setFormInputData(undefined);
-  }, [foodToBeEdited]);
-  console.log(formInputData);
+  }, [formInputData]);
+
   const foodTypes = useDisplayFoodTypes();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("SUBMIT", formInputData);
+
     if (newFood) {
       await foodService.createFood(formInputData!);
     }
