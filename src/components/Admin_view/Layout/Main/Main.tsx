@@ -5,7 +5,12 @@ import Modal from "./Modal/Modal";
 import CreationButtonsContainer from "./CreationButtonsContainer/CreationButtonsContainer";
 function Main({ selectedFoodType, displayTypes }: MainProps) {
   const [displayModal, setDisplayModal] = useState(false);
-  const [modalData, setModalData] = useState<FormProps>();
+  const [modalData, setModalData] = useState<ModalData>({
+    foodToBeEdited: undefined,
+    foodTypeToBeEdited: undefined,
+    newFood: false,
+    newFoodType: false,
+  });
 
   return (
     <main>
@@ -32,7 +37,7 @@ function Main({ selectedFoodType, displayTypes }: MainProps) {
       <Modal
         handleDisplayModal={setDisplayModal}
         displayModal={displayModal}
-        modalData={modalData!}
+        modalData={modalData}
       />
     </main>
   );

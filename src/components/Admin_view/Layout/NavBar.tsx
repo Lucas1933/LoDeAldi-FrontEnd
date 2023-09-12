@@ -3,7 +3,6 @@ import { Collapse, Dropdown, initTE } from "tw-elements";
 import { foodTypeService } from "@/service";
 
 function NavBar({ updateSelectedFoodType, updateSelectedType }: NavBarProps) {
-  console.log("navbar rendered");
   const [foodTypes, setFoodTypes] = useState<FoodTypeData[]>([]);
   const handleFoodTypeSelection = (
     event: React.MouseEvent<HTMLButtonElement>

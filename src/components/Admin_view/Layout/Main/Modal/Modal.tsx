@@ -1,4 +1,7 @@
-import Form from "./Form";
+import NewFoodForm from "./Forms/NewFoodForm";
+import NewTypeForm from "./Forms/NewTypeForm";
+import EditFoodForm from "./Forms/EditFoodForm";
+import EditTypeForm from "./Forms/EditTypeForm";
 import { useState, useEffect } from "react";
 import {
   TERipple,
@@ -12,9 +15,13 @@ import {
 
 function Modal({ handleDisplayModal, displayModal, modalData }: ModalProps) {
   const [showModal, setShowModal] = useState(displayModal);
+  const { newFood, newFoodType, foodToBeEdited, foodTypeToBeEdited } =
+    modalData;
+
   useEffect(() => {
     setShowModal(displayModal);
   }, [displayModal]);
+
   return (
     <div>
       {/* <!-- Modal --> */}
@@ -52,7 +59,10 @@ function Modal({ handleDisplayModal, displayModal, modalData }: ModalProps) {
             </TEModalHeader>
             {/* <!--Modal body--> */}
             <TEModalBody>
-              <Form {...modalData} />
+              {newFood && <NewFoodForm />}
+              {newFoodType && <NewTypeForm />}
+              {foodToBeEdited && <EditFoodForm {...foodToBeEdited} />}
+              {foodTypeToBeEdited && <EditTypeForm {...foodTypeToBeEdited} />}
             </TEModalBody>
             <TEModalFooter>
               <TERipple rippleColor="light">
