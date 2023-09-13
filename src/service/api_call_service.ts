@@ -22,7 +22,9 @@ export default class ApiCallService {
   }
 
   async deleteResource(_id: string): Promise<boolean> {
-    const response = await fetch(this.URL + _id);
+    console.log(this.URL + _id);
+    const response = await fetch(this.URL + _id, { method: "DELETE" });
+    console.log(await response.json());
     if (!response.ok) {
       // Handle non-OK responses, e.g., by throwing an error or returning null
       throw new Error(`Failed to fetch data from ${this.URL}`);

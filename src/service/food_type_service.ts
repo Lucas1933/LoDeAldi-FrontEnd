@@ -21,4 +21,8 @@ export default class FoodTypeService {
     const result = await this.api.updateResource(type);
     return result;
   }
+  async deleteFoodType(id: string): Promise<boolean> {
+    const result = await this.api.deleteResource(id);
+    return result;
+  }
 }
