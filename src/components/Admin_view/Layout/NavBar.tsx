@@ -1,8 +1,11 @@
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState } from "react";
 import { Collapse, Dropdown, initTE } from "tw-elements";
 import { foodTypeService } from "@/service";
 
-function NavBar({ updateSelectedFoodType, updateSelectedType }: NavBarProps) {
+export default function NavBar({
+  updateSelectedFoodType,
+  updateSelectedType,
+}: NavBarProps) {
   const [foodTypes, setFoodTypes] = useState<FoodTypeData[]>([]);
   const handleFoodTypeSelection = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -15,6 +18,7 @@ function NavBar({ updateSelectedFoodType, updateSelectedType }: NavBarProps) {
     initTE({ Collapse, Dropdown });
     async function getTypes() {
       const obtainedTypes = await foodTypeService.getFoodTypes();
+
       setFoodTypes(obtainedTypes);
     }
     getTypes();
@@ -102,4 +106,3 @@ function NavBar({ updateSelectedFoodType, updateSelectedType }: NavBarProps) {
     </header>
   );
 }
-export const memoizedNavBar = memo(NavBar);

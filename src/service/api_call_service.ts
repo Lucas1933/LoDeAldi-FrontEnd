@@ -7,6 +7,7 @@ export default class ApiCallService {
   async getPayload<T>(param?: string): Promise<T | null> {
     try {
       const response = await fetch(this.URL + (param ? param : ""));
+
       if (!response.ok) {
         // Handle non-OK responses, e.g., by throwing an error or returning null
         throw new Error(`Failed to fetch data from ${this.URL}`);
@@ -22,9 +23,8 @@ export default class ApiCallService {
   }
 
   async deleteResource(_id: string): Promise<boolean> {
-    console.log(this.URL + _id);
     const response = await fetch(this.URL + _id, { method: "DELETE" });
-    console.log(await response.json());
+
     if (!response.ok) {
       // Handle non-OK responses, e.g., by throwing an error or returning null
       throw new Error(`Failed to fetch data from ${this.URL}`);

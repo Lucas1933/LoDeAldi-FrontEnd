@@ -1,12 +1,18 @@
 import { foodTypeService, foodService } from "@service/index.ts";
 import { TEInput, TERipple } from "tw-elements-react";
 import { useEffect, useState } from "react";
-export default function NewFoodForm() {
+export default function NewFoodForm({
+  handleShowLoading,
+}: {
+  handleShowLoading: (showLoading: boolean) => void;
+}) {
   const [formInputData, setFormInputData] = useState<FoodDataForInsertion>();
   const [types, setTypes] = useState<FoodTypeData[]>([]);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    handleShowLoading(true);
     await foodService.createFood(formInputData!);
+    handleShowLoading(false);
   };
   const onFieldChange = (
     event:

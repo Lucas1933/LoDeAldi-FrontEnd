@@ -2,21 +2,32 @@ import { foodTypeService } from "@service/index.ts";
 import { TEInput, TERipple } from "tw-elements-react";
 import { useEffect, useState } from "react";
 
-export default function EditTypeForm(foodTypeToBeEdited: FoodTypeData) {
+export default function EditTypeForm({
+  foodTypeToBeEdited,
+  handleShowLoading,
+}: {
+  foodTypeToBeEdited: FoodTypeData;
+  handleShowLoading: (showLoading: boolean) => void;
+}) {
   const [types, setTypes] = useState<FoodTypeData[]>([]);
   const [formInputData, setFormInputData] = useState<FoodTypeData>({
     ...foodTypeToBeEdited,
   });
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    handleShowLoading(true);
     await foodTypeService.updateFoodType(formInputData);
+    handleShowLoading(false);
   };
   const onFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormInputData({ ...formInputData!, [name]: value! });
   };
   const onDelete = async () => {
-    const deletedType = await foodTypeService.deleteFoodType(formInputData._id);
+    handleShowLoading(true);
+    await foodTypeService.deleteFoodType(formInputData._id);
+    handleShowLoading(false);
   };
 
   useEffect(() => {

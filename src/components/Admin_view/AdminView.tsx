@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Main from "./Layout/Main/Main";
-import { memoizedNavBar as NavBar } from "./Layout/NavBar";
+import NavBar from "./Layout/NavBar";
 
 function AdminView() {
   const [selectedFoodType, setSelectedFoodType] = useState("");

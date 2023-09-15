@@ -2,7 +2,11 @@ import { foodTypeService } from "@service/index.ts";
 import { TEInput, TERipple } from "tw-elements-react";
 import { useState } from "react";
 
-export default function NewTypeForm() {
+export default function NewTypeForm({
+  handleShowLoading,
+}: {
+  handleShowLoading: (showLoading: boolean) => void;
+}) {
   const [formInputData, setFormInputData] =
     useState<FoodTypeDataForInsertion>();
   const [types, setTypes] = useState<FoodTypeData[]>([]);
@@ -10,10 +14,12 @@ export default function NewTypeForm() {
     const { name, value } = event.target;
     setFormInputData({ ...formInputData!, [name]: value! });
   };
-  console.log(formInputData);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    handleShowLoading(true);
     await foodTypeService.createFoodType(formInputData!);
+    handleShowLoading(false);
   };
   return (
     <form onSubmit={handleSubmit}>

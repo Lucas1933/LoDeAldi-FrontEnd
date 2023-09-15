@@ -2,7 +2,13 @@ import { foodTypeService, foodService } from "@service/index.ts";
 import { TEInput, TERipple } from "tw-elements-react";
 import { useEffect, useState } from "react";
 
-export default function EditFoodForm(foodToBeEdited: FoodData) {
+export default function EditFoodForm({
+  foodToBeEdited,
+  handleShowLoading,
+}: {
+  foodToBeEdited: FoodData;
+  handleShowLoading: (showLoading: boolean) => void;
+}) {
   const [formInputData, setFormInputData] = useState<FoodData>({
     ...foodToBeEdited,
   });
@@ -10,7 +16,9 @@ export default function EditFoodForm(foodToBeEdited: FoodData) {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    handleShowLoading(true);
     await foodService.updateFood(formInputData);
+    handleShowLoading(false);
   };
   const onFieldChange = (
     event:
@@ -18,12 +26,13 @@ export default function EditFoodForm(foodToBeEdited: FoodData) {
       | React.ChangeEvent<HTMLTextAreaElement>
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
-    console.log("change");
     const { name, value } = event.target;
     setFormInputData({ ...formInputData, [name]: value });
   };
   const onDelete = async () => {
-    const deletedFood = await foodService.deleteFood(formInputData._id);
+    handleShowLoading(true);
+    await foodService.deleteFood(formInputData._id);
+    handleShowLoading(false);
   };
 
   useEffect(() => {
