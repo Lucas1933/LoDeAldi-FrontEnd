@@ -11,6 +11,7 @@ export default function NavBar({
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     const selectedFoodType = event.currentTarget.getAttribute("data-foodtype")!;
+    console.log("re render nav");
     updateSelectedFoodType(selectedFoodType);
   };
 
@@ -18,7 +19,6 @@ export default function NavBar({
     initTE({ Collapse, Dropdown });
     async function getTypes() {
       const obtainedTypes = await foodTypeService.getFoodTypes();
-
       setFoodTypes(obtainedTypes);
     }
     getTypes();

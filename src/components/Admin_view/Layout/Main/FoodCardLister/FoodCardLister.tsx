@@ -1,4 +1,5 @@
-import useDisplayFood from "@hooks/use_display_food";
+import { foodService } from "@/service";
+import { useEffect, useState } from "react";
 import FoodCard from "./FoodCard";
 
 function FoodCardLister({
@@ -6,8 +7,15 @@ function FoodCardLister({
   handleDisplayModal,
   handleModalData,
 }: FoodCardListerProps) {
-  const foodsToDisplay = useDisplayFood(selectedFoodType);
-  const mappedFoods = foodsToDisplay.map((eachFood) => (
+  const [foods, setFoods] = useState<FoodData[]>([]);
+  useEffect(() => {
+    async function getFoods() {
+      const foodsToDisplay = await foodService.getFoodByType(selectedFoodType);
+      setFoods(foodsToDisplay);
+    }
+    getFoods();
+  });
+  const mappedFoods = foods.map((eachFood) => (
     <FoodCard
       key={eachFood._id}
       food={eachFood}

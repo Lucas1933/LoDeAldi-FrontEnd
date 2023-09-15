@@ -3,8 +3,10 @@ import { TEInput, TERipple } from "tw-elements-react";
 import { useEffect, useState } from "react";
 export default function NewFoodForm({
   handleShowLoading,
+  handleDisplayModal,
 }: {
-  handleShowLoading: (showLoading: boolean) => void;
+  handleShowLoading(showLoading: boolean): void;
+  handleDisplayModal(displayModal: boolean): void;
 }) {
   const [formInputData, setFormInputData] = useState<FoodDataForInsertion>();
   const [types, setTypes] = useState<FoodTypeData[]>([]);
@@ -13,6 +15,7 @@ export default function NewFoodForm({
     handleShowLoading(true);
     await foodService.createFood(formInputData!);
     handleShowLoading(false);
+    handleDisplayModal(false);
   };
   const onFieldChange = (
     event:

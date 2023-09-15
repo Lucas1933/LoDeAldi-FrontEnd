@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 export default function EditFoodForm({
   foodToBeEdited,
   handleShowLoading,
+  handleDisplayModal,
 }: {
   foodToBeEdited: FoodData;
-  handleShowLoading: (showLoading: boolean) => void;
+  handleShowLoading(showLoading: boolean): void;
+  handleDisplayModal(displayModal: boolean): void;
 }) {
   const [formInputData, setFormInputData] = useState<FoodData>({
     ...foodToBeEdited,
@@ -19,6 +21,7 @@ export default function EditFoodForm({
     handleShowLoading(true);
     await foodService.updateFood(formInputData);
     handleShowLoading(false);
+    handleDisplayModal(false);
   };
   const onFieldChange = (
     event:
@@ -33,6 +36,7 @@ export default function EditFoodForm({
     handleShowLoading(true);
     await foodService.deleteFood(formInputData._id);
     handleShowLoading(false);
+    handleDisplayModal(false);
   };
 
   useEffect(() => {

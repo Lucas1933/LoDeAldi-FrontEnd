@@ -4,8 +4,10 @@ import { useState } from "react";
 
 export default function NewTypeForm({
   handleShowLoading,
+  handleDisplayModal,
 }: {
-  handleShowLoading: (showLoading: boolean) => void;
+  handleShowLoading(showLoading: boolean): void;
+  handleDisplayModal(displayModal: boolean): void;
 }) {
   const [formInputData, setFormInputData] =
     useState<FoodTypeDataForInsertion>();
@@ -20,6 +22,7 @@ export default function NewTypeForm({
     handleShowLoading(true);
     await foodTypeService.createFoodType(formInputData!);
     handleShowLoading(false);
+    handleDisplayModal(false);
   };
   return (
     <form onSubmit={handleSubmit}>

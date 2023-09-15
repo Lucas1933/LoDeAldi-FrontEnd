@@ -14,7 +14,15 @@ import {
   TEModalFooter,
 } from "tw-elements-react";
 
-function Modal({ handleDisplayModal, displayModal, modalData }: ModalProps) {
+function Modal({
+  displayModal,
+  modalData,
+  handleDisplayModal,
+}: {
+  displayModal: boolean;
+  modalData: ModalData;
+  handleDisplayModal(displayModal: boolean): void;
+}) {
   const [showModal, setShowModal] = useState(displayModal);
   const [showLoading, setShowLoading] = useState(false);
   const { newFood, newFoodType, foodToBeEdited, foodTypeToBeEdited } =
@@ -61,20 +69,30 @@ function Modal({ handleDisplayModal, displayModal, modalData }: ModalProps) {
             </TEModalHeader>
             {/* <!--Modal body--> */}
             <TEModalBody>
-              {newFood && <NewFoodForm handleShowLoading={setShowLoading} />}
+              {newFood && (
+                <NewFoodForm
+                  handleShowLoading={setShowLoading}
+                  handleDisplayModal={handleDisplayModal}
+                />
+              )}
               {newFoodType && (
-                <NewTypeForm handleShowLoading={setShowLoading} />
+                <NewTypeForm
+                  handleShowLoading={setShowLoading}
+                  handleDisplayModal={handleDisplayModal}
+                />
               )}
               {foodToBeEdited && (
                 <EditFoodForm
                   foodToBeEdited={foodToBeEdited}
                   handleShowLoading={setShowLoading}
+                  handleDisplayModal={handleDisplayModal}
                 />
               )}
               {foodTypeToBeEdited && (
                 <EditTypeForm
                   foodTypeToBeEdited={foodTypeToBeEdited}
                   handleShowLoading={setShowLoading}
+                  handleDisplayModal={handleDisplayModal}
                 />
               )}
             </TEModalBody>

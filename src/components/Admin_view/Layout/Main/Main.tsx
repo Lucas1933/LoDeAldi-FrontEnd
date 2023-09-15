@@ -11,7 +11,6 @@ function Main({ selectedFoodType, displayTypes }: MainProps) {
     newFood: false,
     newFoodType: false,
   });
-
   return (
     <main>
       <div>
@@ -35,8 +34,8 @@ function Main({ selectedFoodType, displayTypes }: MainProps) {
       )}
 
       <Modal
-        handleDisplayModal={setDisplayModal}
         displayModal={displayModal}
+        handleDisplayModal={setDisplayModal}
         modalData={modalData}
       />
     </main>
