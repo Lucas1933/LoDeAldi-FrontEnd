@@ -10,26 +10,30 @@ function CreationButtonsContainer({
   handleModalData(modalData: ModalData): void;
 }) {
   return (
-    <div>
-      <AddNewButton
-        actionText="Añadir comida"
-        icon={addFoodIcon}
-        modalData={{
-          newFood: true,
-        }}
-        handleDisplayModal={handleDisplayModal}
-        handleModalData={handleModalData}
-      />
+    <div className="flex px-4">
+      <div className="mr-4 mt-2">
+        <AddNewButton
+          actionText="Añadir comida"
+          icon={addFoodIcon}
+          modalData={{
+            newFood: true,
+          }}
+          handleDisplayModal={handleDisplayModal}
+          handleModalData={handleModalData}
+        />
+      </div>
 
-      <AddNewButton
-        actionText="Añadir categoria"
-        icon={addTypeIcon}
-        modalData={{
-          newFoodType: true,
-        }}
-        handleDisplayModal={handleDisplayModal}
-        handleModalData={handleModalData}
-      />
+      <div className="ml-4 mt-2">
+        <AddNewButton
+          actionText="Añadir categoria"
+          icon={addTypeIcon}
+          modalData={{
+            newFoodType: true,
+          }}
+          handleDisplayModal={handleDisplayModal}
+          handleModalData={handleModalData}
+        />
+      </div>
     </div>
   );
 }

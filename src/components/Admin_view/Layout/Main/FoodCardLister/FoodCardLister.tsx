@@ -13,7 +13,6 @@ function FoodCardLister({
   handleModalData(modalData: ModalData): void;
   isResourceChanged: { hasChanged: boolean };
 }) {
-  console.log("re render food lister");
   const [foods, setFoods] = useState<FoodData[]>([]);
   useEffect(() => {
     async function getFoods() {
@@ -25,7 +24,7 @@ function FoodCardLister({
 
   return (
     <>
-      <ul>
+      <ul className="">
         {foods.map((eachFood) => (
           <FoodCard
             key={eachFood._id}
