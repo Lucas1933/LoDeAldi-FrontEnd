@@ -3,8 +3,17 @@ import FoodCardLister from "./FoodCardLister/FoodCardLister";
 import TypeLister from "./TypeCardLister/TypeLister";
 import Modal from "./Modal/Modal";
 import CreationButtonsContainer from "./CreationButtonsContainer/CreationButtonsContainer";
-function Main({ selectedFoodType, displayTypes }: MainProps) {
+function Main({
+  selectedFoodType,
+  displayTypes,
+}: {
+  selectedFoodType: string;
+  displayTypes: boolean;
+}) {
   const [displayModal, setDisplayModal] = useState(false);
+  const [isResourceChanged, setIsResourceChanged] = useState({
+    hasChanged: false,
+  });
   const [modalData, setModalData] = useState<ModalData>({
     foodToBeEdited: undefined,
     foodTypeToBeEdited: undefined,
@@ -24,12 +33,14 @@ function Main({ selectedFoodType, displayTypes }: MainProps) {
           selectedFoodType={selectedFoodType}
           handleDisplayModal={setDisplayModal}
           handleModalData={setModalData}
+          isResourceChanged={isResourceChanged}
         />
       )}
       {displayTypes && (
         <TypeLister
           handleDisplayModal={setDisplayModal}
           handleModalData={setModalData}
+          isResourceChanged={isResourceChanged}
         />
       )}
 
@@ -37,6 +48,7 @@ function Main({ selectedFoodType, displayTypes }: MainProps) {
         displayModal={displayModal}
         handleDisplayModal={setDisplayModal}
         modalData={modalData}
+        handleIsResourceChanged={setIsResourceChanged}
       />
     </main>
   );

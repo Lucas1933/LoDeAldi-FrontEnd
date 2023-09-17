@@ -1,19 +1,28 @@
 import { foodTypeService, foodService } from "@service/index.ts";
 import { TEInput, TERipple } from "tw-elements-react";
 import { useEffect, useState } from "react";
+
 export default function NewFoodForm({
   handleShowLoading,
   handleDisplayModal,
+  handleIsResourceChanged,
 }: {
   handleShowLoading(showLoading: boolean): void;
   handleDisplayModal(displayModal: boolean): void;
+  handleIsResourceChanged(isResourceChanged: { hasChanged: boolean }): void;
 }) {
-  const [formInputData, setFormInputData] = useState<FoodDataForInsertion>();
   const [types, setTypes] = useState<FoodTypeData[]>([]);
+  const [formInputData, setFormInputData] = useState<FoodDataForInsertion>({
+    name: "",
+    description: "",
+    price: 0,
+    type: "Pizza",
+  });
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleShowLoading(true);
     await foodService.createFood(formInputData!);
+    handleIsResourceChanged({ hasChanged: true });
     handleShowLoading(false);
     handleDisplayModal(false);
   };
@@ -24,22 +33,23 @@ export default function NewFoodForm({
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = event.target;
-    setFormInputData({ ...formInputData!, [name]: value! });
+
+    setFormInputData({ ...formInputData!, [name]: value });
   };
+  console.log(formInputData);
   useEffect(() => {
     async function getTypes() {
       const obtainedTypes = await foodTypeService.getFoodTypes();
       setTypes(obtainedTypes);
     }
-    if (types.length == 0) {
-      getTypes();
-    }
-  });
+    getTypes();
+  }, []);
   return (
     <form onSubmit={handleSubmit}>
       <h1>Nueva comida</h1>
       <TEInput
         onChange={onFieldChange}
+        required
         name="name"
         type="text"
         label="Nombre"
@@ -47,6 +57,7 @@ export default function NewFoodForm({
       ></TEInput>
       <TEInput
         onChange={onFieldChange}
+        required
         name="price"
         type="number"
         label="Precio"
@@ -56,6 +67,7 @@ export default function NewFoodForm({
       <div className="relative mb-6">
         <textarea
           onChange={onFieldChange}
+          required
           name="description"
           className="focus:border-primary  peer block min-h-[auto] w-full rounded border-2 border-solid bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 motion-reduce:transition-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200"
           id="exampleFormControlTextarea13"
@@ -79,11 +91,11 @@ export default function NewFoodForm({
         </label>
         <select
           name="type"
+          required
           onChange={onFieldChange}
           className="form-select relative m-0 block w-[1px] min-w-0 flex-auto rounded-r border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
           id="inputGroupSelect01"
         >
-          <option>Selecione la categoria</option>
           {types.map((eachType) => (
             <option key={eachType._id} value={eachType.type}>
               {eachType.type}

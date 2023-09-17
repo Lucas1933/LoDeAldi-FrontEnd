@@ -5,13 +5,14 @@ import { useState } from "react";
 export default function NewTypeForm({
   handleShowLoading,
   handleDisplayModal,
+  handleIsResourceChanged,
 }: {
   handleShowLoading(showLoading: boolean): void;
   handleDisplayModal(displayModal: boolean): void;
+  handleIsResourceChanged(isResourceChanged: { hasChanged: boolean }): void;
 }) {
   const [formInputData, setFormInputData] =
     useState<FoodTypeDataForInsertion>();
-  const [types, setTypes] = useState<FoodTypeData[]>([]);
   const onFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormInputData({ ...formInputData!, [name]: value! });
@@ -21,6 +22,7 @@ export default function NewTypeForm({
     event.preventDefault();
     handleShowLoading(true);
     await foodTypeService.createFoodType(formInputData!);
+    handleIsResourceChanged({ hasChanged: true });
     handleShowLoading(false);
     handleDisplayModal(false);
   };

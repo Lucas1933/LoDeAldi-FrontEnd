@@ -5,7 +5,10 @@ import { foodTypeService } from "@/service";
 export default function NavBar({
   updateSelectedFoodType,
   updateSelectedType,
-}: NavBarProps) {
+}: {
+  updateSelectedFoodType(foodType: string): void;
+  updateSelectedType(displayTypes: boolean): void;
+}) {
   const [foodTypes, setFoodTypes] = useState<FoodTypeData[]>([]);
   const handleFoodTypeSelection = (
     event: React.MouseEvent<HTMLButtonElement>

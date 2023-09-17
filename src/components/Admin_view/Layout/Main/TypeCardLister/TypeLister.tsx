@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { foodTypeService } from "@/service";
 import TypeCard from "./TypeCard";
-function TypeLister({ handleDisplayModal, handleModalData }: TypeListerProps) {
+function TypeLister({
+  handleDisplayModal,
+  handleModalData,
+  isResourceChanged,
+}: {
+  handleDisplayModal(displayModal: boolean): void;
+  handleModalData(modalData: ModalData): void;
+  isResourceChanged: { hasChanged: boolean };
+}) {
   const [types, setTypes] = useState<FoodTypeData[]>([]);
   useEffect(() => {
     async function getTypes() {
@@ -9,7 +17,7 @@ function TypeLister({ handleDisplayModal, handleModalData }: TypeListerProps) {
       setTypes(obtainedTypes);
     }
     getTypes();
-  });
+  }, [isResourceChanged]);
   return (
     <>
       <ul>

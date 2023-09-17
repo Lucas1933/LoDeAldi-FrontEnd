@@ -18,10 +18,12 @@ function Modal({
   displayModal,
   modalData,
   handleDisplayModal,
+  handleIsResourceChanged,
 }: {
   displayModal: boolean;
   modalData: ModalData;
   handleDisplayModal(displayModal: boolean): void;
+  handleIsResourceChanged(isResourceChanged: { hasChanged: boolean }): void;
 }) {
   const [showModal, setShowModal] = useState(displayModal);
   const [showLoading, setShowLoading] = useState(false);
@@ -73,12 +75,14 @@ function Modal({
                 <NewFoodForm
                   handleShowLoading={setShowLoading}
                   handleDisplayModal={handleDisplayModal}
+                  handleIsResourceChanged={handleIsResourceChanged}
                 />
               )}
               {newFoodType && (
                 <NewTypeForm
                   handleShowLoading={setShowLoading}
                   handleDisplayModal={handleDisplayModal}
+                  handleIsResourceChanged={handleIsResourceChanged}
                 />
               )}
               {foodToBeEdited && (
@@ -86,6 +90,7 @@ function Modal({
                   foodToBeEdited={foodToBeEdited}
                   handleShowLoading={setShowLoading}
                   handleDisplayModal={handleDisplayModal}
+                  handleIsResourceChanged={handleIsResourceChanged}
                 />
               )}
               {foodTypeToBeEdited && (
@@ -93,6 +98,7 @@ function Modal({
                   foodTypeToBeEdited={foodTypeToBeEdited}
                   handleShowLoading={setShowLoading}
                   handleDisplayModal={handleDisplayModal}
+                  handleIsResourceChanged={handleIsResourceChanged}
                 />
               )}
             </TEModalBody>

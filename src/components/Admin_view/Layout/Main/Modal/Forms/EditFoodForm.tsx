@@ -6,20 +6,23 @@ export default function EditFoodForm({
   foodToBeEdited,
   handleShowLoading,
   handleDisplayModal,
+  handleIsResourceChanged,
 }: {
   foodToBeEdited: FoodData;
   handleShowLoading(showLoading: boolean): void;
   handleDisplayModal(displayModal: boolean): void;
+  handleIsResourceChanged(isResourceChanged: { hasChanged: boolean }): void;
 }) {
   const [formInputData, setFormInputData] = useState<FoodData>({
     ...foodToBeEdited,
   });
   const [types, setTypes] = useState<FoodTypeData[]>([]);
-
+  let deleteConfirmationClicks = 0;
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleShowLoading(true);
     await foodService.updateFood(formInputData);
+    handleIsResourceChanged({ hasChanged: true });
     handleShowLoading(false);
     handleDisplayModal(false);
   };
@@ -33,23 +36,29 @@ export default function EditFoodForm({
     setFormInputData({ ...formInputData, [name]: value });
   };
   const onDelete = async () => {
-    handleShowLoading(true);
-    await foodService.deleteFood(formInputData._id);
-    handleShowLoading(false);
-    handleDisplayModal(false);
+    deleteConfirmationClicks++;
+    if (deleteConfirmationClicks == 1) {
+      alert("Presione nuevamente borrar para confirmar");
+    }
+    if (deleteConfirmationClicks == 2) {
+      handleShowLoading(true);
+      await foodService.deleteFood(formInputData._id);
+      handleIsResourceChanged({ hasChanged: true });
+      handleShowLoading(false);
+      handleDisplayModal(false);
+    }
   };
-
+  console.log(formInputData);
   useEffect(() => {
     async function getTypes() {
       const obtainedTypes = await foodTypeService.getFoodTypes();
       setTypes(obtainedTypes);
     }
-    if (types.length == 0) {
-      getTypes();
-    }
-    setFormInputData({
-      ...foodToBeEdited,
-    });
+    getTypes();
+  }, []);
+
+  useEffect(() => {
+    setFormInputData({ ...foodToBeEdited });
   }, [foodToBeEdited]);
 
   return (

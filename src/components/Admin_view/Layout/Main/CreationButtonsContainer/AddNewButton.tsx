@@ -4,7 +4,13 @@ function AddNewButton({
   modalData,
   handleModalData,
   handleDisplayModal,
-}: AddNewButtonProps) {
+}: {
+  actionText: string;
+  icon: string;
+  modalData: ModalData;
+  handleModalData(modalData: ModalData): void;
+  handleDisplayModal(displayModal: boolean): void;
+}) {
   return (
     <button
       onClick={() => {

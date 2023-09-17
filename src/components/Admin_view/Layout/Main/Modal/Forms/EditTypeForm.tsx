@@ -6,20 +6,22 @@ export default function EditTypeForm({
   foodTypeToBeEdited,
   handleShowLoading,
   handleDisplayModal,
+  handleIsResourceChanged,
 }: {
   foodTypeToBeEdited: FoodTypeData;
   handleShowLoading(showLoading: boolean): void;
   handleDisplayModal(displayModal: boolean): void;
+  handleIsResourceChanged(isResourceChanged: { hasChanged: boolean }): void;
 }) {
-  const [types, setTypes] = useState<FoodTypeData[]>([]);
   const [formInputData, setFormInputData] = useState<FoodTypeData>({
     ...foodTypeToBeEdited,
   });
-
+  let deleteConfirmationClicks = 0;
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleShowLoading(true);
     await foodTypeService.updateFoodType(formInputData);
+    handleIsResourceChanged({ hasChanged: true });
     handleShowLoading(false);
     handleDisplayModal(false);
   };
@@ -28,22 +30,25 @@ export default function EditTypeForm({
     setFormInputData({ ...formInputData!, [name]: value! });
   };
   const onDelete = async () => {
-    handleShowLoading(true);
-    await foodTypeService.deleteFoodType(formInputData._id);
-    handleShowLoading(false);
-    handleDisplayModal(false);
+    deleteConfirmationClicks++;
+    if (deleteConfirmationClicks == 1) {
+      alert("Presione nuevamente borrar para confirmar");
+    }
+    if (deleteConfirmationClicks == 2) {
+      handleShowLoading(true);
+      await foodTypeService.deleteFoodType(formInputData._id);
+      handleIsResourceChanged({ hasChanged: true });
+      handleShowLoading(false);
+      handleDisplayModal(false);
+    }
   };
 
   useEffect(() => {
-    async function getTypes() {
-      const obtainedTypes = await foodTypeService.getFoodTypes();
-      setTypes(obtainedTypes);
-    }
-    if (types.length == 0) {
-      getTypes();
-    }
-    setFormInputData({ ...foodTypeToBeEdited });
+    setFormInputData({
+      ...foodTypeToBeEdited,
+    });
   }, [foodTypeToBeEdited]);
+
   return (
     <form onSubmit={handleSubmit}>
       <TEInput

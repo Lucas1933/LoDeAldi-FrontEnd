@@ -6,7 +6,14 @@ function FoodCardLister({
   selectedFoodType,
   handleDisplayModal,
   handleModalData,
-}: FoodCardListerProps) {
+  isResourceChanged,
+}: {
+  selectedFoodType: string;
+  handleDisplayModal(displayModal: boolean): void;
+  handleModalData(modalData: ModalData): void;
+  isResourceChanged: { hasChanged: boolean };
+}) {
+  console.log("re render food lister");
   const [foods, setFoods] = useState<FoodData[]>([]);
   useEffect(() => {
     async function getFoods() {
@@ -14,18 +21,20 @@ function FoodCardLister({
       setFoods(foodsToDisplay);
     }
     getFoods();
-  });
-  const mappedFoods = foods.map((eachFood) => (
-    <FoodCard
-      key={eachFood._id}
-      food={eachFood}
-      handleDisplayModal={handleDisplayModal}
-      handleModalData={handleModalData}
-    />
-  ));
+  }, [selectedFoodType, isResourceChanged]);
+
   return (
     <>
-      <ul>{mappedFoods}</ul>
+      <ul>
+        {foods.map((eachFood) => (
+          <FoodCard
+            key={eachFood._id}
+            food={eachFood}
+            handleDisplayModal={handleDisplayModal}
+            handleModalData={handleModalData}
+          />
+        ))}
+      </ul>
     </>
   );
 }

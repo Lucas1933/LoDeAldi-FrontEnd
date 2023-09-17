@@ -5,7 +5,10 @@ import addTypeIcon from "@assets/add_type_icon.svg";
 function CreationButtonsContainer({
   handleDisplayModal,
   handleModalData,
-}: CreationButtonsContainerProps) {
+}: {
+  handleDisplayModal(displayModal: boolean): void;
+  handleModalData(modalData: ModalData): void;
+}) {
   return (
     <div>
       <AddNewButton
