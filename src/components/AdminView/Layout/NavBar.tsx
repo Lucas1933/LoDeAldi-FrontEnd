@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Collapse, Dropdown, initTE } from "tw-elements";
 import { foodTypeService } from "@/service";
-
+import logo from "@assets/logo.png";
 export default function NavBar({
   updateSelectedFoodType,
   updateSelectedType,
@@ -66,12 +66,12 @@ export default function NavBar({
               aria-label="Toggle navigation"
             >
               {/* <!-- Hamburger icon --> */}
-              <span className="[&>svg]:w-7">
+              <span className="[&>svg]:w-10">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="h-7 w-7"
+                  className="h-10 w-10"
                 >
                   <path
                     fillRule="evenodd"
@@ -123,6 +123,9 @@ export default function NavBar({
                 </li>
               </ul>
             </div>
+          </div>
+          <div className="w-[70%] lg:hidden">
+            <img className="w-[20vh]" src={logo} alt="logo" />
           </div>
         </nav>
       )}
