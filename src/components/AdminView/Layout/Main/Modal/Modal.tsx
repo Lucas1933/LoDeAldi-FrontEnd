@@ -36,7 +36,6 @@ function Modal({
 
   return (
     <div>
-      {/* <!-- Modal --> */}
       <TEModal
         show={showModal}
         setShow={setShowModal}

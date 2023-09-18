@@ -46,7 +46,7 @@ export default function NewFoodForm({
   }, []);
   return (
     <form onSubmit={handleSubmit}>
-      <h1>Nueva comida</h1>
+      <h1 className="m-0 mb-2 text-center">Nueva comida</h1>
       <TEInput
         onChange={onFieldChange}
         required

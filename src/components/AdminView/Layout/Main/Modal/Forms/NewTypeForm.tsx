@@ -28,9 +28,10 @@ export default function NewTypeForm({
   };
   return (
     <form onSubmit={handleSubmit}>
-      <h1>Nueva categoria</h1>
+      <h1 className="m-0 mb-3 text-center">Nueva categoria</h1>
       <TEInput
         onChange={onFieldChange}
+        required
         name="type"
         type="text"
         label="Nombre"
