@@ -12,16 +12,12 @@ export default function NewFoodForm({
   handleIsResourceChanged(isResourceChanged: { hasChanged: boolean }): void;
 }) {
   const [types, setTypes] = useState<FoodTypeData[]>([]);
-  const [formInputData, setFormInputData] = useState<FoodDataForInsertion>({
-    name: "",
-    description: "",
-    price: 0,
-    type: "Pizza",
-  });
+  const [formInputData, setFormInputData] = useState<FormData>(new FormData());
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleShowLoading(true);
-    await foodService.createFood(formInputData!);
+    await foodService.createFood(formInputData);
     handleIsResourceChanged({ hasChanged: true });
     handleShowLoading(false);
     handleDisplayModal(false);
@@ -32,20 +28,32 @@ export default function NewFoodForm({
       | React.ChangeEvent<HTMLTextAreaElement>
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const { name, value } = event.target;
-
-    setFormInputData({ ...formInputData!, [name]: value });
+    const files = (event.target as HTMLInputElement).files;
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        formInputData.append("thumbnails", files[i]);
+      }
+    } else {
+      const { name, value } = event.target;
+      formInputData.set(name, value);
+    }
+    setFormInputData(formInputData);
   };
-  console.log(formInputData);
+
   useEffect(() => {
     async function getTypes() {
       const obtainedTypes = await foodTypeService.getFoodTypes();
       setTypes(obtainedTypes);
     }
+
     getTypes();
   }, []);
+  for (const [key, value] of formInputData) {
+    console.log(key, value);
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} encType="multipart/form-data">
       <h1 className="m-0 mb-2 text-center">Nueva comida</h1>
       <TEInput
         onChange={onFieldChange}
@@ -102,6 +110,21 @@ export default function NewFoodForm({
             </option>
           ))}
         </select>
+      </div>
+      <div className="mb-3 w-96">
+        <label
+          htmlFor="thumbnailsFiles"
+          className="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
+        ></label>
+        <input
+          name="thumbnails"
+          onChange={onFieldChange}
+          className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+          type="file"
+          accept="image/png, image/jpeg"
+          id="thumbnailsFiles"
+          multiple
+        />
       </div>
       {/* <!--Submit button--> */}
       <TERipple rippleColor="light" className="w-full my-5">

@@ -32,13 +32,13 @@ export default class ApiCallService {
     return true;
   }
 
-  async createResource<T>(resourceBody: T): Promise<boolean> {
+  async createResource(resourceBody: FormData): Promise<boolean> {
     const response = await fetch(this.URL, {
       method: "POST",
-      headers: {
+      /*   headers: {
         "Content-Type": "application/json", // Modify this header if needed
-      },
-      body: JSON.stringify(resourceBody),
+      }, */
+      body: resourceBody,
     });
     if (!response.ok) {
       // Handle non-OK responses, e.g., by throwing an error or returning null

@@ -6,12 +6,15 @@ type FoodData = {
   thumbnails: string[];
   type: string;
 };
-
+type FileListArray = FileList & {
+  // Add any additional properties or methods if needed
+  customProperty?: string;
+};
 type FoodDataForInsertion = {
   name: string;
   price: number;
   description: string;
-  /* thumbnails: string[]; to do*/
+  thumbnails: File[];
   type: string;
 };
 

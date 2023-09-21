@@ -17,8 +17,8 @@ export default class FoodService {
     return result;
   }
 
-  async createFood(food: FoodDataForInsertion): Promise<boolean> {
-    const result = await this.api.createResource(food);
+  async createFood(form: FormData): Promise<boolean> {
+    const result = await this.api.createResource(form);
     return result;
   }
 
