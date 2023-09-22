@@ -3,7 +3,7 @@ import { useState } from "react";
 import Main from "./Main/Main";
 export default function MenuView() {
   const [selectedFoodType, setSelectedFoodType] = useState("");
-  console.log(selectedFoodType);
+
   return (
     <>
       <header>
