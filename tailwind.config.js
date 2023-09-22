@@ -9,11 +9,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        body: "#292323",
-        "card-background": "#021701",
-        "card-border": "#4ade80",
-        "categoriesBtn-bg": "#000000",
-        money: "#16a34a",
+        body: "rgba(0, 10, 23,40)",
+        "card-background": "#000a17",
+        "card-border": "#8c3b35",
+        "categoriesBtn-bg": "#000a17",
+        money: "#3e9c35",
       },
     },
   },

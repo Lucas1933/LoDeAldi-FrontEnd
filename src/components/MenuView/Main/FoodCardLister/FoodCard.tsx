@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+
 export default function FoodCard({ food }: { food: FoodData }) {
   const { name, price, description, thumbnails, type } = food;
   const [updatedThumbnails, setUpdatedThumbnails] = useState([""]);
+
   useEffect(() => {
     const updatedThumbnails = thumbnails.map((thumbnail) => {
       return (
@@ -15,23 +17,19 @@ export default function FoodCard({ food }: { food: FoodData }) {
      dark:bg-neutral-700 border-solid border-blue-500 border-2 " */
   return (
     <li
-      className="flex justify-between border-b-2 bg-black mt-2
+      className="flex justify-between border-2 rounded-xl bg-card-background m-2
       text-lg font-medium uppercase leading-normal text-white 
       transition duration-150 ease-in-out border-card-border "
     >
-      <div className="flex justify-center items-center w-[50%] p-3 ">
-        <img
-          className="w-[100%] rounded-full"
-          src={updatedThumbnails[0]}
-          alt=""
-        />
+      <div className="flex w-[50%] ">
+        <img src={updatedThumbnails[0]} className="w-max" alt="" />
       </div>
-      <div className="flex flex-col justify-evenly w-[60%] text-white ">
-        <h5 className="mb-2 text-xl font-medium leading-tight ">{name}</h5>
-        <h5 className="mb-2 text-xl font-medium leading-tight  text-money dark:text-neutral-50">
+      <div className="flex ml-3 flex-col justify-evenly w-[60%] text-white ">
+        <h5 className="mb-1 text-xl font-medium leading-tight mt-2 ">{name}</h5>
+        <h5 className="mb-1  text-xl font-medium leading-tight  text-money dark:text-neutral-50">
           ${price}
         </h5>
-        <p className="mb-4 text-base ">{description}</p>
+        <p className="mb-1 text-base ">{description}</p>
       </div>
     </li>
   );

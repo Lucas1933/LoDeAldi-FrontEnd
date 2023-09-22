@@ -13,5 +13,8 @@
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none; /* Firefox */
     }
+    .no-taplight {
+      -webkit-tap-highlight-color: transparent;
+    }
   }
 }

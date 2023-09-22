@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { foodService } from "@/service";
 import FoodCard from "./FoodCard";
 export default function FoodCardLister({
@@ -7,30 +8,33 @@ export default function FoodCardLister({
   selectedFoodType: string;
 }) {
   const [foods, setFoods] = useState<FoodData[]>([]);
+  const [loadedFoods, setLoadedFoods] = useState<{ [key: string]: FoodData[] }>(
+    {}
+  );
+  /*  const [wasFoodTypeAlreadyLoaded, setWasFoodTypeAlreadyLoaded] =
+    useState(false); */
+
   useEffect(() => {
     async function getFoods() {
       const foodsToDisplay = await foodService.getFoodByType(selectedFoodType);
       setFoods(foodsToDisplay);
+      loadedFoods[foodsToDisplay[0].type] = foodsToDisplay;
+      setLoadedFoods(loadedFoods);
+      console.log("re render");
     }
-    getFoods();
-  }, [selectedFoodType]);
+
+    if (!Object.keys(loadedFoods).includes(selectedFoodType)) {
+      getFoods();
+    } else {
+      setFoods(loadedFoods[selectedFoodType]);
+    }
+  }, [selectedFoodType, loadedFoods]);
+  useEffect(() => {});
   return (
     <>
       <ul className="">
         {foods.map((eachFood) => {
-          if (eachFood.type == "Burger") {
-            return (
-              <>
-                <h2 className="text-white text-3xl">
-                  Añadile una carne extra por{" "}
-                  <span className="text-money ">$350</span>
-                </h2>
-                <FoodCard key={eachFood._id} food={eachFood} />
-              </>
-            );
-          } else {
-            return <FoodCard key={eachFood._id} food={eachFood} />;
-          }
+          return <FoodCard key={eachFood._id} food={eachFood} />;
         })}
       </ul>
     </>
