@@ -7,7 +7,15 @@ export default {
     "./node_modules/tw-elements/dist/js/**/*.js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        body: "#292323",
+        "card-background": "#021701",
+        "card-border": "#4ade80",
+        "categoriesBtn-bg": "#000000",
+        money: "#16a34a",
+      },
+    },
   },
   darkMode: "class",
   plugins: [

@@ -9,7 +9,7 @@ function FoodCard({
   handleDisplayModal(displayModal: boolean): void;
   handleModalData(modalData: ModalData): void;
 }) {
-  const { _id, name, price, description, thumbnails, type } = food;
+  const { name, price, description, thumbnails, type } = food;
   const [updatedThumbnails, setUpdatedThumbnails] = useState([""]);
   useEffect(() => {
     const updatedThumbnails = thumbnails.map((thumbnail) => {

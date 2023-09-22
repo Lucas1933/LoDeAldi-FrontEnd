@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Main from "./Layout/Main/Main";
-import NavBar from "./Layout/NavBar";
+import Main from "./Main/Main";
+import NavBar from "./NavBar";
 
 function AdminView() {
   const [selectedFoodType, setSelectedFoodType] = useState("");
