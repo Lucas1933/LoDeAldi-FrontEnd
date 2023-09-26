@@ -16,27 +16,31 @@ export default function FoodCardLister({
 
   useEffect(() => {
     async function getFoods() {
-      const foodsToDisplay = await foodService.getFoodByType(selectedFoodType);
-      setFoods(foodsToDisplay);
-      loadedFoods[foodsToDisplay[0].type] = foodsToDisplay;
-      setLoadedFoods(loadedFoods);
-      console.log("re render");
+      if (selectedFoodType) {
+        const foodsToDisplay = await foodService.getFoodByType(
+          selectedFoodType
+        );
+        setFoods(foodsToDisplay);
+        loadedFoods[foodsToDisplay[0].type] = foodsToDisplay;
+        setLoadedFoods(loadedFoods);
+      }
     }
-
     if (!Object.keys(loadedFoods).includes(selectedFoodType)) {
       getFoods();
     } else {
       setFoods(loadedFoods[selectedFoodType]);
     }
   }, [selectedFoodType, loadedFoods]);
-  useEffect(() => {});
+  console.log(foods);
   return (
     <>
-      <ul className="">
-        {foods.map((eachFood) => {
-          return <FoodCard key={eachFood._id} food={eachFood} />;
-        })}
-      </ul>
+      {selectedFoodType && (
+        <ul className="overflow-y-scroll h-[50vh]">
+          {foods.map((eachFood) => {
+            return <FoodCard key={eachFood._id} food={eachFood} />;
+          })}
+        </ul>
+      )}
     </>
   );
 }

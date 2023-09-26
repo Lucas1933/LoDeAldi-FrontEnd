@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import FoodCarousel from "./FoodCarousel";
 export default function FoodCard({ food }: { food: FoodData }) {
   const { name, price, description, thumbnails, type } = food;
   const [updatedThumbnails, setUpdatedThumbnails] = useState([""]);
@@ -17,12 +17,12 @@ export default function FoodCard({ food }: { food: FoodData }) {
      dark:bg-neutral-700 border-solid border-blue-500 border-2 " */
   return (
     <li
-      className="flex justify-between border-2 rounded-xl bg-card-background m-2
+      className="flex justify-between border-b-2  bg-card-background my-2
       text-lg font-medium uppercase leading-normal text-white 
-      transition duration-150 ease-in-out border-card-border "
+      transition duration-150 ease-in-out border-gray-400 border-opacity-40 py-2"
     >
       <div className="flex w-[50%] ">
-        <img src={updatedThumbnails[0]} className="w-max" alt="" />
+        <img src={updatedThumbnails[0]} className="w-max rounded-xl" alt="" />
       </div>
       <div className="flex ml-3 flex-col justify-evenly w-[60%] text-white ">
         <h5 className="mb-1 text-xl font-medium leading-tight mt-2 ">{name}</h5>
