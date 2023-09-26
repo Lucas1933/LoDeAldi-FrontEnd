@@ -4,7 +4,7 @@ import Header from "./Header/Header";
 import Main from "./Main/Main";
 
 export default function MenuView() {
-  const [selectedFoodType, setSelectedFoodType] = useState("");
+  const [selectedFoodType, setSelectedFoodType] = useState("Combo");
 
   return (
     <>
