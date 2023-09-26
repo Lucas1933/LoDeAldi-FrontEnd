@@ -63,9 +63,9 @@ export default function NavBar({
       Combo: comboIcon,
     });
     setIconSize({
-      Pizza: ["w-10", "h-10"].join(" "),
+      Pizza: ["w-12", "h-11"].join(" "),
       Milanesa: ["w-12", "h-10"].join(" "),
-      Burger: ["w-10", "h-50"].join(" "),
+      Burger: ["w-10", "h-10"].join(" "),
       Frita: ["w-12", "h-10"].join(" "),
       Combo: ["w-12", "h-10"].join(" "),
     });
@@ -109,8 +109,8 @@ export default function NavBar({
                       handleScrollIntoView(event);
                     }}
                     className="no-taplight   justify-center 
-                    items-center flex font-serif my-3 mx-2 px-8 pb-2 pt-2.5 bg-categoriesBtn-bg
-              text-lg font-bold uppercase 
+                    items-center flex font-serif my-3 mx-2 px-8  bg-categoriesBtn-bg
+              text-base font-bold uppercase 
               leading-normal text-white
                border-gray-400 border-[1px] rounded-full border-opacity-60
               transition duration-150 ease-in-out

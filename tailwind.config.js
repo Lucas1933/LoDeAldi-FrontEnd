@@ -15,6 +15,9 @@ export default {
         "categoriesBtn-bg": "#000a17",
         money: "#3e9c35",
       },
+      fontFamily: {
+        roboto: "Roboto, sans-serif", // Adds a new `font-display` class
+      },
     },
   },
   darkMode: "class",

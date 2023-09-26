@@ -14,6 +14,7 @@ function FoodCardLister({
   isResourceChanged: { hasChanged: boolean };
 }) {
   const [foods, setFoods] = useState<FoodData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function getFoods() {
       const foodsToDisplay = await foodService.getFoodByType(selectedFoodType);
@@ -24,16 +25,20 @@ function FoodCardLister({
 
   return (
     <>
-      <ul className="">
-        {foods.map((eachFood) => (
-          <FoodCard
-            key={eachFood._id}
-            food={eachFood}
-            handleDisplayModal={handleDisplayModal}
-            handleModalData={handleModalData}
-          />
-        ))}
-      </ul>
+      {isLoading ? (
+        "IS LAODING"
+      ) : (
+        <ul className="">
+          {foods.map((eachFood) => (
+            <FoodCard
+              key={eachFood._id}
+              food={eachFood}
+              handleDisplayModal={handleDisplayModal}
+              handleModalData={handleModalData}
+            />
+          ))}
+        </ul>
+      )}
     </>
   );
 }
