@@ -30,12 +30,11 @@ export default function FoodCardLister({
       setIsLoading(true);
       getFoods();
       setIsLoading(false);
-      console.log("loading food lister");
     } else {
       setFoods(loadedFoods[selectedFoodType]);
     }
   }, [selectedFoodType, loadedFoods]);
-  console.log(foods);
+
   return (
     <>
       <ul className="overflow-y-scroll h-[60vh] no-scrollbar">

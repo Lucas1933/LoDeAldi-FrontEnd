@@ -48,7 +48,7 @@ export default function EditFoodForm({
       handleDisplayModal(false);
     }
   };
-  console.log(formInputData);
+
   useEffect(() => {
     async function getTypes() {
       const obtainedTypes = await foodTypeService.getFoodTypes();

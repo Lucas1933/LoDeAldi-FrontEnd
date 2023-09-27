@@ -15,7 +15,7 @@ export default function NavBar({
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     const selectedFoodType = event.currentTarget.getAttribute("data-foodtype")!;
-    console.log("re render nav");
+
     updateSelectedFoodType(selectedFoodType);
   };
 

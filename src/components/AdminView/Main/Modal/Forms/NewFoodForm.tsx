@@ -48,9 +48,6 @@ export default function NewFoodForm({
 
     getTypes();
   }, []);
-  for (const [key, value] of formInputData) {
-    console.log(key, value);
-  }
 
   return (
     <form onSubmit={handleSubmit} encType="multipart/form-data">

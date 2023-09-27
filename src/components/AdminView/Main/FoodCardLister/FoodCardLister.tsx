@@ -17,8 +17,10 @@ function FoodCardLister({
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function getFoods() {
+      setIsLoading(true);
       const foodsToDisplay = await foodService.getFoodByType(selectedFoodType);
       setFoods(foodsToDisplay);
+      setIsLoading(false);
     }
     getFoods();
   }, [selectedFoodType, isResourceChanged]);

@@ -47,7 +47,7 @@ export default function NavBar({
       if (index !== -1) {
         const comboType = obtainedTypes[index];
         obtainedTypes.splice(index, 1);
-        obtainedTypes.unshift(comboType); // Add "fries" to the beginning of the array
+        obtainedTypes.unshift(comboType);
       }
       setFoodTypes(obtainedTypes);
       setIsLoading(false);
@@ -113,6 +113,8 @@ export default function NavBar({
               text-base font-bold uppercase 
               leading-normal text-white
                border-gray-400 border-[1px] rounded-full border-opacity-60
+               shadow-[0_4px_9px_-4px_#3b71ca] 
+               focus:shadow-[0_4px_9px_-4px_#8c3b35]
               transition duration-150 ease-in-out
               focus:outline-none focus:ring-0 focus:text-card-border focus:border-2 focus:border-card-border"
                     data-te-ripple-init
