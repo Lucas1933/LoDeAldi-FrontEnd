@@ -6,7 +6,7 @@ import validateAdmin from "@/hooks/useAuthAdmin";
 import logo from "@assets/logo.png";
 import foodIcon from "@assets/forkandknife-icon.svg";
 
-export default function Login({ children }) {
+export default function Login({ children }: { children: React.ReactNode }) {
   const [formInputData, setFormInputData] = useState({
     email: "",
     password: "",
@@ -30,7 +30,7 @@ export default function Login({ children }) {
         <div className="h-[80vh] flex flex-col justify-center items-center">
           <img src={logo} alt="" />
           <div
-            className=" rounded-lg bg-white  w-fit flex items-center 
+            className=" rounded-lg bg-body  w-fit flex items-center 
           shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]
            dark:bg-neutral-700"
           >
@@ -80,7 +80,20 @@ export default function Login({ children }) {
                 <TERipple rippleColor="light">
                   <button
                     type="submit"
-                    className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                    className="inline-block  bg-body px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white 
+                    shadow-[0_4px_9px_-4px_#3b71ca] 
+                    transition duration-150 ease-in-out 
+                    border-gray-400 border-[1px] rounded-full border-opacity-60
+                    hover:bg-primary-600
+                     hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+                     focus:bg-primary-600 
+                     focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+                      focus:outline-none focus:ring-0 active:bg-primary-700 
+                      active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
+                      dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)]
+                      dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] 
+                      dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] 
+                      dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                   >
                     Identificarse
                   </button>
