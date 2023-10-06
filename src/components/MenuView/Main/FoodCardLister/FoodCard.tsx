@@ -20,15 +20,15 @@ export default function FoodCard({ food }: { food: FoodData }) {
   }, [thumbnails, type]);
   return (
     <li
-      className="flex justify-between border-b-2  bg-card-background my-2
-      text-lg font-medium uppercase leading-normal text-white 
-      transition duration-150 ease-in-out border-gray-400 border-opacity-40 py-2"
+      className="my-2 flex justify-between  border-b-2 border-gray-400
+      border-opacity-40 bg-card-background py-2 text-lg font-medium 
+      uppercase leading-normal text-white transition duration-150 ease-in-out"
     >
       <div className="flex w-[50%]">
         <div ref={placeholderDivImageLoading} className="animate-pulse">
           <span
-            className="inline-block animate-pulse mx-2 rounded-lg  h-28 w-28 p-6
-  flex-auto cursor-wait bg-current align-middle text-base
+            className="mx-2 inline-block h-28 w-28  flex-auto animate-pulse cursor-wait
+  rounded-lg bg-current p-6 align-middle text-base
    text-neutral-700 opacity-50 dark:text-neutral-50"
           ></span>
         </div>
@@ -36,18 +36,18 @@ export default function FoodCard({ food }: { food: FoodData }) {
           ref={foodImg}
           src={updatedThumbnails[0]}
           onLoad={() => handleImageLoaded()}
-          className="w-max rounded-xl hidden"
+          className="hidden w-max rounded-xl"
           alt=""
         />
       </div>
-      <div className="flex ml-3 flex-col  justify-evenly w-[60%] text-white ">
-        <p className="mb-1 text-xl  leading-tight mt-2 font-roboto font-light ">
+      <div className="ml-3 flex w-[60%]  flex-col justify-evenly text-white ">
+        <p className="mb-1 mt-2  font-roboto text-xl font-light leading-tight ">
           {name}
         </p>
-        <p className="mb-1  text-2xl font-medium font-mono leading-tight  text-money dark:text-neutral-50">
+        <p className="mb-1  font-mono text-2xl font-medium leading-tight  text-money dark:text-neutral-50">
           ${price}
         </p>
-        <p className="mb-1 text-base lowercase font-roboto italic font-thin">
+        <p className="mb-1 font-roboto text-base font-thin lowercase italic">
           {description}
         </p>
       </div>
