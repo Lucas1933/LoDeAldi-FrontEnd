@@ -1,136 +1,105 @@
-import { useEffect } from "react";
-import { Carousel, initTE } from "tw-elements";
-export default function FoodCarousel() {
+import { useEffect, useRef, useState } from "react";
+
+import slideLeftIcon from "@assets/slide-left-icon.svg";
+import slideRightIcon from "@assets/slide-right-icon.svg";
+import closeIcon from "@assets/close-icon.svg";
+
+export default function FoodCarousel({
+  setIsCarouselVisible,
+  images,
+}: {
+  setIsCarouselVisible(isVisible: boolean): void;
+  images: string[];
+}) {
+  const imgsContainer = useRef<HTMLDivElement>(null);
+  const [imgs, setImgs] = useState<HTMLCollection>();
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
   useEffect(() => {
-    initTE({ Carousel });
+    window.addEventListener("beforeunload", function (event) {
+      event.preventDefault();
+    });
+    document.addEventListener("click", function (event) {
+      const target = event.target as HTMLDivElement;
+      if (target.id == "foodCarouselParentDiv") {
+        setIsCarouselVisible(false);
+      }
+    });
   });
+
+  useEffect(() => {
+    setImgs(imgsContainer.current!.children);
+  }, [images]);
 
   return (
     <>
       <div
-        id="carouselDarkVariant"
-        className="relative"
-        data-te-carousel-init
-        data-te-ride="carousel"
+        id="foodCarouselParentDiv"
+        className="fixed bottom-0 left-0 right-0 top-0 z-10 flex h-full flex-col items-center justify-center bg-slate-950 bg-opacity-50"
       >
-        <div
-          className="absolute inset-x-0 bottom-0 z-[2] mx-[15%] mb-4 flex list-none justify-center p-0"
-          data-te-carousel-indicators
-        >
-          <button
-            data-te-target="#carouselDarkVariant"
-            data-te-slide-to="0"
-            data-te-carousel-active
-            className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-black bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            data-te-target="#carouselDarkVariant"
-            className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-black bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
-            data-te-slide-to="1"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            data-te-target="#carouselDarkVariant"
-            className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-black bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
-            data-te-slide-to="2"
-            aria-label="Slide 1"
-          ></button>
+        <div className="flex w-full justify-end">
+          <button className="mr-4" onClick={() => setIsCarouselVisible(false)}>
+            <img className="w-14" src={closeIcon} alt="" />
+          </button>
         </div>
 
-        <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
-          <div
-            className="relative float-left -mr-[100%] w-full !transform-none opacity-0 transition-opacity duration-[600ms] ease-in-out motion-reduce:transition-none"
-            data-te-carousel-fade
-            data-te-carousel-item
-            data-te-carousel-active
-          >
-            <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(19).webp"
-              className="block w-full"
-              alt="Motorbike Smoke"
-            />
+        <div className="relative z-20 flex w-[50vh] justify-center">
+          <div className="absolute bottom-0 left-0 right-0 top-0 z-10 flex   w-full flex-row-reverse items-center justify-between ">
+            <button
+              className="h-full"
+              onClick={() => {
+                if (currentImgIndex + 1 == imgs!.length) {
+                  imgs![currentImgIndex].classList.add("hidden");
+                  imgs![0].classList.remove("hidden");
+                  setCurrentImgIndex(0);
+                } else {
+                  imgs![currentImgIndex].classList.add("hidden");
+                  imgs![currentImgIndex + 1].classList.remove("hidden");
+                  setCurrentImgIndex(currentImgIndex + 1);
+                }
+              }}
+            >
+              <img className="w-14" src={slideRightIcon} alt="" />
+            </button>
+            <button
+              className="h-full"
+              onClick={() => {
+                if (currentImgIndex - 1 < 0) {
+                  imgs![currentImgIndex].classList.add("hidden");
+                  imgs![imgs!.length - 1].classList.remove("hidden");
+                  setCurrentImgIndex(imgs!.length - 1);
+                } else {
+                  imgs![currentImgIndex].classList.add("hidden");
+                  imgs![currentImgIndex - 1].classList.remove("hidden");
+                  setCurrentImgIndex(currentImgIndex - 1);
+                }
+              }}
+            >
+              <img className="w-14" src={slideLeftIcon} alt="" />
+            </button>
           </div>
-
-          <div
-            className="relative float-left -mr-[100%] hidden w-full !transform-none opacity-0 transition-opacity duration-[600ms] ease-in-out motion-reduce:transition-none"
-            data-te-carousel-fade
-            data-te-carousel-item
-          >
-            <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(35).webp"
-              className="block w-full"
-              alt="Mountaintop"
-            />
-          </div>
-
-          <div
-            className="relative float-left -mr-[100%] hidden w-full !transform-none opacity-0 transition-opacity duration-[600ms] ease-in-out motion-reduce:transition-none"
-            data-te-carousel-fade
-            data-te-carousel-item
-          >
-            <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(40).webp"
-              className="block w-full"
-              alt="Woman Reading a Book"
-            />
+          <div ref={imgsContainer} className=" w-full">
+            {images.map((eachImg, index) => {
+              if (index == 0) {
+                return (
+                  <img
+                    key={eachImg}
+                    className="max-h-[40vh] w-full"
+                    src={eachImg}
+                    alt=""
+                  />
+                );
+              }
+              return (
+                <img
+                  key={eachImg}
+                  className="hidden max-h-[40vh]  w-full"
+                  src={eachImg}
+                  alt=""
+                />
+              );
+            })}
           </div>
         </div>
-
-        <button
-          className="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-black opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-black hover:no-underline hover:opacity-90 hover:outline-none focus:text-black focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
-          type="button"
-          data-te-target="#carouselDarkVariant"
-          data-te-slide="prev"
-        >
-          <span className="inline-block h-8 w-8 dark:grayscale">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 19.5L8.25 12l7.5-7.5"
-              />
-            </svg>
-          </span>
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Previous
-          </span>
-        </button>
-
-        <button
-          className="absolute bottom-0 right-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-black opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-black hover:no-underline hover:opacity-90 hover:outline-none focus:text-black focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
-          type="button"
-          data-te-target="#carouselDarkVariant"
-          data-te-slide="next"
-        >
-          <span className="inline-block h-8 w-8 dark:grayscale">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M8.25 4.5l7.5 7.5-7.5 7.5"
-              />
-            </svg>
-          </span>
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Next
-          </span>
-        </button>
       </div>
     </>
   );

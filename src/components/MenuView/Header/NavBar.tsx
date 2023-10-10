@@ -39,7 +39,6 @@ const NavBar = memo(function NavBar({
     initTE({ Ripple });
   });
   useEffect(() => {
-    console.log("gettypes");
     async function getTypes() {
       const obtainedTypes = await foodTypeService.getFoodTypes();
       const index = obtainedTypes.findIndex(
@@ -101,6 +100,7 @@ const NavBar = memo(function NavBar({
               return (
                 <li key={eachType._id} className="flex-1">
                   <button
+                    autoFocus={eachType.type == "Combo" ? true : false}
                     type="button"
                     data-foodtype={eachType.type}
                     onClick={(event) => {
