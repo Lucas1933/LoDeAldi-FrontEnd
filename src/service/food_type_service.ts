@@ -4,7 +4,7 @@ export default class FoodTypeService {
   private api: ApiCallService;
   constructor() {
     this.api = new ApiCallService(
-      import.meta.env.VITE_LO_DE_ALDI_API + "type/"
+      import.meta.env.VITE_LO_DE_ALDI_API + "type/",
     );
   }
 
@@ -13,7 +13,7 @@ export default class FoodTypeService {
     return foodTypes || [];
   }
 
-  async createFoodType(type: FoodTypeDataForInsertion): Promise<boolean> {
+  async createFoodType(type: FormData): Promise<boolean> {
     const result = await this.api.createResource(type);
     return result;
   }
