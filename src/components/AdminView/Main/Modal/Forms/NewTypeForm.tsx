@@ -16,14 +16,13 @@ export default function NewTypeForm({
   const onFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormInputData({ ...formInputData!, [name]: value! });
+    console.log(formInputData);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleShowLoading(true);
-    const typeFormData = new FormData();
-    typeFormData.append("type", formInputData!.type);
-    await foodTypeService.createFoodType(typeFormData);
+    await foodTypeService.createFoodType(formInputData);
     handleIsResourceChanged({ hasChanged: true });
     handleShowLoading(false);
     handleDisplayModal(false);

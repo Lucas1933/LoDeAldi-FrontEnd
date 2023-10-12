@@ -13,8 +13,10 @@ export default class FoodTypeService {
     return foodTypes || [];
   }
 
-  async createFoodType(type: FormData): Promise<boolean> {
-    const result = await this.api.createResource(type);
+  async createFoodType(type: FoodTypeDataForInsertion): Promise<boolean> {
+    const result = await this.api.createResource(type, {
+      "Content-Type": "application/json",
+    });
     return result;
   }
   async updateFoodType(type: FoodTypeData): Promise<boolean> {

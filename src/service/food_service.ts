@@ -4,7 +4,7 @@ export default class FoodService {
   private api: ApiCallService;
   constructor() {
     this.api = new ApiCallService(
-      import.meta.env.VITE_LO_DE_ALDI_API + "food/"
+      import.meta.env.VITE_LO_DE_ALDI_API + "food/",
     );
   }
 

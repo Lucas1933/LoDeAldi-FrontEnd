@@ -13,5 +13,6 @@ export default defineConfig({
       "@service": path.resolve(__dirname, "./src/service"),
     },
   },
+
   plugins: [react()],
 });
