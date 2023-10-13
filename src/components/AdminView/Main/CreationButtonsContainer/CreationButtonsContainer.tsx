@@ -10,8 +10,8 @@ function CreationButtonsContainer({
   handleModalData(modalData: ModalData): void;
 }) {
   return (
-    <div className="flex px-4">
-      <div className="mr-4 mt-2">
+    <div className="flex ">
+      <div className=" mt-2">
         <AddNewButton
           actionText="Añadir comida"
           icon={addFoodIcon}

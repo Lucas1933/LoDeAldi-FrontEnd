@@ -12,7 +12,7 @@ export default function NavBar({
   const [foodTypes, setFoodTypes] = useState<FoodTypeData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const handleFoodTypeSelection = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     const selectedFoodType = event.currentTarget.getAttribute("data-foodtype")!;
 
@@ -35,29 +35,29 @@ export default function NavBar({
   return (
     <header>
       {isLoading ? (
-        <div className="w-[20vh] flex items-center lg:w-full">
+        <div className="flex w-[20vh] items-center lg:w-full">
           <div className="w-full">
             <p className="animate-pulse">
-              <span className="inline-block min-h-[1em] w-full flex-auto cursor-wait bg-current align-middle text-base text-neutral-700 opacity-50 dark:text-neutral-50"></span>
+              <span className="inline-block min-h-[1em] w-full flex-auto cursor-wait bg-current align-middle text-base text-neutral-700 opacity-50 "></span>
             </p>
             <p className="animate-pulse">
-              <span className="inline-block min-h-[1em] w-full flex-auto cursor-wait bg-current align-middle text-base text-neutral-700 opacity-50 dark:text-neutral-50"></span>
+              <span className="inline-block min-h-[1em] w-full flex-auto cursor-wait bg-current align-middle text-base text-neutral-700 opacity-50 "></span>
             </p>
             <p className="animate-pulse">
-              <span className="inline-block min-h-[1em] w-full flex-auto cursor-wait bg-current align-middle text-base text-neutral-700 opacity-50 dark:text-neutral-50"></span>
+              <span className="inline-block min-h-[1em] w-full flex-auto cursor-wait bg-current align-middle text-base text-neutral-700 opacity-50 "></span>
             </p>
           </div>
           <p className="lg:hidden">Cargando...</p>
         </div>
       ) : (
         <nav
-          className="relative flex w-full flex-nowrap items-center justify-between bg-[#FBFBFB] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:flex-wrap lg:justify-start lg:py-4"
+          className="relative flex w-full flex-nowrap items-center justify-between bg-body py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700  lg:flex-wrap lg:justify-start lg:py-4"
           data-te-navbar-ref
         >
           <div className="flex w-full flex-wrap items-center justify-between px-3">
             {/* <!-- Hamburger button for mobile view --> */}
             <button
-              className="block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:!hidden "
+              className="block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0  lg:!hidden "
               type="button"
               data-te-collapse-init
               data-te-target="#navbarSupportedContent5"
@@ -89,11 +89,11 @@ export default function NavBar({
               id="navbarSupportedContent5"
               data-te-collapse-item
             >
-              <ul className="lg:flex lg:justify-center lg:w-fit">
+              <ul className="lg:flex lg:w-fit lg:justify-center">
                 {foodTypes.map((eachType) => (
                   <li
                     key={eachType._id}
-                    className="mb-4 pl-2 font-bold border-b-2 border-gray-400 lg:mx-5 lg:mb-0 lg:pl-0 lg:pr-1"
+                    className="mx-4  mb-4 pl-2 font-bold lg:mx-5 lg:mb-0 lg:pl-0 lg:pr-1"
                     data-te-nav-item-ref
                   >
                     <button
@@ -102,7 +102,15 @@ export default function NavBar({
                         updateSelectedType(false);
                       }}
                       data-foodtype={eachType.type}
-                      className="p-0 flex justify-start text-neutral-950 transition duration-200 hover:text-neutral-400 hover:ease-in-out focus:text-neutral-400 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400 w-full"
+                      className="no-taplight   mx-2  my-3
+                      flex w-full items-center justify-center rounded-full border-[1px]  border-gray-400
+                border-opacity-60 bg-categoriesBtn-bg px-8 
+                font-serif text-base
+                 font-bold uppercase leading-normal text-white
+                
+                 transition
+                duration-150 ease-in-out focus:border-2
+                focus:border-card-border focus:text-card-border focus:shadow-[0_4px_9px_-4px_#8c3b35] focus:outline-none focus:ring-0"
                       data-te-nav-link-ref
                     >
                       <span>{eachType.type}</span>
@@ -110,12 +118,20 @@ export default function NavBar({
                   </li>
                 ))}
                 <li
-                  className="mb-4 pl-2 font-bold border-b-2 border-gray-400 lg:mx-5 lg:mb-0 lg:pl-0 lg:pr-1"
+                  className="mx-4 mb-4  pl-2 font-bold lg:mx-5 lg:mb-0 lg:pl-0 lg:pr-1"
                   data-te-nav-item-ref
                 >
                   <button
                     onClick={() => updateSelectedType(true)}
-                    className="p-0 flex justify-start text-neutral-950 transition duration-200 hover:text-neutral-400 hover:ease-in-out focus:text-neutral-400 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400 w-full"
+                    className="no-taplight   mx-2  my-3
+                    flex w-full items-center justify-center rounded-full border-[1px]  border-gray-400
+              border-opacity-60 bg-categoriesBtn-bg px-8 
+              font-serif text-base
+               font-bold uppercase leading-normal text-white
+               
+               transition
+              duration-150 ease-in-out focus:border-2
+              focus:border-card-border focus:text-card-border focus:shadow-[0_4px_9px_-4px_#8c3b35] focus:outline-none focus:ring-0"
                     data-te-nav-link-ref
                   >
                     Categorias

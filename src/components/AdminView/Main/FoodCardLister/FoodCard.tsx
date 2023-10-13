@@ -21,22 +21,26 @@ function FoodCard({
   }, [thumbnails, type]);
 
   return (
-    <li className="block m-3 rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 border-solid border-blue-500 border-2 ">
-      <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+    <li
+      className="my-2 flex flex-col items-center border-b-2 border-gray-400
+    border-opacity-40 bg-card-background py-2 text-lg font-medium 
+    uppercase leading-normal text-white transition duration-150 ease-in-out"
+    >
+      <h5 className="mb-2 text-xl font-medium leading-tight text-white dark:text-neutral-50">
         {name}
       </h5>
-      <h5 className="mb-2 text-xl font-medium leading-tight  text-green-800 dark:text-neutral-50">
+      <h5 className="mb-2 text-xl font-medium leading-tight  text-money dark:text-neutral-50">
         ${price}
       </h5>
-      <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+      <p className="mb-4 text-base text-neutral-500 dark:text-neutral-200">
         {description}
       </p>
       <div>
-        <div className="flex mb-4">
+        <div className="mb-4 flex">
           {updatedThumbnails.map((eachThumbnail) => (
             <img
               key={eachThumbnail}
-              className="rounded-t-lg w-[15vh]"
+              className="w-[15vh] rounded-t-lg"
               src={eachThumbnail}
               alt="foto de la comida"
             />
@@ -52,7 +56,15 @@ function FoodCard({
             handleDisplayModal(true);
           }}
           type="button"
-          className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+          className="no-taplight   mx-2  my-3
+          flex w-full items-center justify-center rounded-full border-[1px]  border-gray-400
+    border-opacity-60 bg-categoriesBtn-bg px-8 
+    font-serif text-base
+     font-bold uppercase leading-normal text-white
+     
+     transition
+    duration-150 ease-in-out focus:border-2
+    focus:border-card-border focus:text-card-border focus:shadow-[0_4px_9px_-4px_#8c3b35] focus:outline-none focus:ring-0"
         >
           Editar
         </button>
