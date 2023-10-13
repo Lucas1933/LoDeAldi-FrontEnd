@@ -54,18 +54,26 @@ export default function NewFoodForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1 className="m-0 mb-2 text-center">Nueva comida</h1>
+      <h1 className="m-0 mb-2 text-center text-white">Nueva comida</h1>
       <TEInput
         onChange={onFieldChange}
         required
         name="name"
         type="text"
+        theme={{
+          input:
+            "peer text-white block min-h-[auto] w-full border-opacity-50 rounded border-solid border-2 border-green-400 bg-transparent  transition-all duration-200 ease-linear  peer-focus:text-primary motion-reduce:transition-none  disabled:bg-neutral-100 read-only:bg-neutral-100 dark:disabled:bg-neutral-700 dark:read-only:bg-neutral-700 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary	",
+        }}
         label="Nombre"
         className="mb-6"
       ></TEInput>
       <TEInput
         onChange={onFieldChange}
         required
+        theme={{
+          input:
+            "peer text-white block min-h-[auto] w-full rounded border-0 bg-transparent outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary motion-reduce:transition-none placeholder:opacity-0 disabled:bg-neutral-100 read-only:bg-neutral-100 dark:disabled:bg-neutral-700 dark:read-only:bg-neutral-700 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary	",
+        }}
         name="price"
         type="number"
         label="Precio"
@@ -77,7 +85,7 @@ export default function NewFoodForm({
           onChange={onFieldChange}
           required
           name="description"
-          className="focus:border-primary  peer block min-h-[auto] w-full rounded border-2 border-solid bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 motion-reduce:transition-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200"
+          className="focus:border-primary peer block min-h-[auto] w-full rounded border-2 border-solid bg-transparent px-3 py-[0.32rem] leading-[1.6] text-white outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 motion-reduce:transition-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200"
           id="exampleFormControlTextarea13"
           rows={3}
         ></textarea>
@@ -101,7 +109,7 @@ export default function NewFoodForm({
           name="type"
           required
           onChange={onFieldChange}
-          className="form-select focus:border-primary dark:focus:border-primary relative m-0 block w-[1px] min-w-0 flex-auto rounded-r border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder:text-neutral-200"
+          className="form-select focus:border-primary dark:focus:border-primary relative m-0 block w-[1px] min-w-0 flex-auto rounded-r border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6]  text-white outline-none transition duration-200 ease-in-out focus:z-[3] focus:text-white focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder:text-neutral-200"
           id="inputGroupSelect01"
         >
           {types.map((eachType) => (

@@ -2,6 +2,8 @@ import { foodService } from "@/service";
 import { useEffect, useState } from "react";
 import FoodCard from "./FoodCard";
 
+import isLoadingIcon from "@assets/loading_icon.svg";
+
 function FoodCardLister({
   selectedFoodType,
   handleDisplayModal,
@@ -28,7 +30,12 @@ function FoodCardLister({
   return (
     <>
       {isLoading ? (
-        "IS LAODING"
+        <div className="flex flex-col items-center justify-center">
+          <span className="text-xl font-bold italic text-white">
+            Cargando...
+          </span>
+          <img className="w-28 animate-spin" src={isLoadingIcon} alt="" />
+        </div>
       ) : (
         <ul className="">
           {foods.map((eachFood) => (

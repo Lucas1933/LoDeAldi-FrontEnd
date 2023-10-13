@@ -42,9 +42,9 @@ function Modal({
         scrollable
         staticBackdrop
       >
-        <TEModalDialog centered>
+        <TEModalDialog centered theme={{ wrapper: "mx-8 rounded-lg" }}>
           <TEModalContent>
-            <TEModalHeader>
+            <TEModalHeader theme={{ wrapper: "bg-body" }}>
               {/* <!--Close button--> */}
               <button
                 type="button"
@@ -69,7 +69,7 @@ function Modal({
               </button>
             </TEModalHeader>
             {/* <!--Modal body--> */}
-            <TEModalBody>
+            <TEModalBody theme={{ wrapper: "bg-body" }}>
               {newFood && (
                 <NewFoodForm
                   handleShowLoading={setShowLoading}
@@ -101,11 +101,11 @@ function Modal({
                 />
               )}
             </TEModalBody>
-            <TEModalFooter>
+            <TEModalFooter theme={{ wrapper: "bg-body" }}>
               <TERipple rippleColor="light">
                 <button
                   type="button"
-                  className="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                  className="bg-primary-100 text-primary-700 hover:bg-primary-accent-100 focus:bg-primary-accent-100 active:bg-primary-accent-200 inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0"
                   onClick={() => handleDisplayModal(false)}
                 >
                   Cerrar
