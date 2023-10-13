@@ -5,6 +5,7 @@ import validateAdmin from "@/hooks/useAuthAdmin";
 
 import logo from "@assets/logo.png";
 import foodIcon from "@assets/forkandknife-icon.svg";
+import loadingIcon from "@assets/loading_icon.svg";
 
 export default function Login({ children }: { children: React.ReactNode }) {
   const [formInputData, setFormInputData] = useState({
@@ -16,6 +17,7 @@ export default function Login({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   useEffect(() => {
     if (response && response.status == 401) {
+      setTimeout(() => {}, 3000);
       setResponse(undefined);
       alert("Datos invalidos, intente nuevamente");
     }
@@ -27,15 +29,20 @@ export default function Login({ children }: { children: React.ReactNode }) {
 
     case 401:
       return (
-        <div className="h-[80vh] flex flex-col justify-center items-center">
+        <div className="flex h-[80vh] flex-col items-center justify-center">
           <img src={logo} alt="" />
           <div
-            className=" rounded-lg bg-body  w-fit flex items-center 
+            className=" flex w-fit  items-center rounded-lg bg-body 
           shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]
            dark:bg-neutral-700"
           >
             {isLoading ? (
-              "cargando"
+              <div className="flex flex-col items-center justify-center">
+                <span className="text-2xl font-bold italic text-white">
+                  Cargando...{" "}
+                </span>
+                <img className="w-16 animate-spin" src={loadingIcon} alt="" />
+              </div>
             ) : (
               <form
                 onSubmit={async (event) => {
@@ -44,8 +51,8 @@ export default function Login({ children }: { children: React.ReactNode }) {
                   setResponse(
                     await validateAdmin(
                       formInputData.email,
-                      formInputData.password
-                    )
+                      formInputData.password,
+                    ),
                   );
                   setIsLoading(false);
                 }}
@@ -61,7 +68,7 @@ export default function Login({ children }: { children: React.ReactNode }) {
                   }}
                 >
                   <small
-                    id="emailHelp"
+                    id="email"
                     className="absolute w-full text-neutral-500 dark:text-neutral-200"
                   ></small>
                 </TEInput>
@@ -74,21 +81,21 @@ export default function Login({ children }: { children: React.ReactNode }) {
                   name="password"
                   type="password"
                   label="Contraseña"
-                  className="mt-12 mb-6"
+                  className="mb-6 mt-12"
                 ></TEInput>
 
                 <TERipple rippleColor="light">
                   <button
                     type="submit"
-                    className="inline-block  bg-body px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white 
-                    shadow-[0_4px_9px_-4px_#3b71ca] 
-                    transition duration-150 ease-in-out 
-                    border-gray-400 border-[1px] rounded-full border-opacity-60
-                    hover:bg-primary-600
-                     hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-                     focus:bg-primary-600 
-                     focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-                      focus:outline-none focus:ring-0 active:bg-primary-700 
+                    className="hover:bg-primary-600  focus:bg-primary-600 active:bg-primary-700 inline-block rounded-full border-[1px] border-gray-400 border-opacity-60 bg-body px-6 
+                    pb-2 
+                    pt-2.5 text-xs font-medium 
+                    uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca]
+                    transition
+                     duration-150 
+                     ease-in-out 
+                     hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+                      focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
                       active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
                       dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)]
                       dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] 
@@ -106,9 +113,9 @@ export default function Login({ children }: { children: React.ReactNode }) {
               onClick={() => {
                 navigate("/");
               }}
-              className="text-white flex flex-col justify-center items-center 
-            border-2 border-card-border rounded-full
-            p-6"
+              className="flex flex-col items-center justify-center rounded-full 
+            border-2 border-card-border p-6
+            text-white"
             >
               <p className="text-lg">
                 Si has entrado por error, presiona aqui para volver al menu!
@@ -121,15 +128,20 @@ export default function Login({ children }: { children: React.ReactNode }) {
 
     default:
       return (
-        <div className="h-[80vh] flex flex-col justify-center items-center">
+        <div className="flex h-[80vh] flex-col items-center justify-center">
           <img src={logo} alt="" />
           <div
-            className=" rounded-lg bg-body  w-fit flex items-center 
+            className=" flex w-fit  items-center rounded-lg bg-body 
           shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]
            dark:bg-neutral-700"
           >
             {isLoading ? (
-              "cargando"
+              <div className="flex flex-col items-center justify-center">
+                <span className="text-2xl font-bold italic text-white">
+                  Cargando...{" "}
+                </span>
+                <img className="w-16 animate-spin" src={loadingIcon} alt="" />
+              </div>
             ) : (
               <form
                 onSubmit={async (event) => {
@@ -138,8 +150,8 @@ export default function Login({ children }: { children: React.ReactNode }) {
                   setResponse(
                     await validateAdmin(
                       formInputData.email,
-                      formInputData.password
-                    )
+                      formInputData.password,
+                    ),
                   );
                   setIsLoading(false);
                 }}
@@ -168,21 +180,21 @@ export default function Login({ children }: { children: React.ReactNode }) {
                   name="password"
                   type="password"
                   label="Contraseña"
-                  className="mt-12 mb-6"
+                  className="mb-6 mt-12"
                 ></TEInput>
 
                 <TERipple rippleColor="light">
                   <button
                     type="submit"
-                    className="inline-block  bg-body px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white 
-                    shadow-[0_4px_9px_-4px_#3b71ca] 
-                    transition duration-150 ease-in-out 
-                    border-gray-400 border-[1px] rounded-full border-opacity-60
-                    hover:bg-primary-600
-                     hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
-                     focus:bg-primary-600 
-                     focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-                      focus:outline-none focus:ring-0 active:bg-primary-700 
+                    className="hover:bg-primary-600  focus:bg-primary-600 active:bg-primary-700 inline-block rounded-full border-[1px] border-gray-400 border-opacity-60 bg-body px-6 
+                    pb-2 
+                    pt-2.5 text-xs font-medium 
+                    uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca]
+                    transition
+                     duration-150 
+                     ease-in-out 
+                     hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+                      focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 
                       active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] 
                       dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)]
                       dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] 
@@ -200,9 +212,9 @@ export default function Login({ children }: { children: React.ReactNode }) {
               onClick={() => {
                 navigate("/");
               }}
-              className="text-white flex flex-col justify-center items-center 
-            border-2 border-card-border rounded-full
-            p-6"
+              className="flex flex-col items-center justify-center rounded-full 
+            border-2 border-card-border p-6
+            text-white"
             >
               <p className="text-lg">
                 Si has entrado por error, presiona aqui para volver al menu!

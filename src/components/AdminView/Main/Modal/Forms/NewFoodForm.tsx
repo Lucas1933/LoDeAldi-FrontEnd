@@ -17,6 +17,7 @@ export default function NewFoodForm({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleShowLoading(true);
+
     await foodService.createFood(formInputData);
     handleIsResourceChanged({ hasChanged: true });
     handleShowLoading(false);
@@ -35,6 +36,9 @@ export default function NewFoodForm({
       }
     } else {
       const { name, value } = event.target;
+      if (!formInputData.get("type") || name == "type") {
+        formInputData.set("type", types[0].type);
+      }
       formInputData.set(name, value);
     }
     setFormInputData(formInputData);
@@ -45,7 +49,6 @@ export default function NewFoodForm({
       const obtainedTypes = await foodTypeService.getFoodTypes();
       setTypes(obtainedTypes);
     }
-
     getTypes();
   }, []);
 
