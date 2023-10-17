@@ -26,4 +26,13 @@ export default class FoodService {
     const result = await this.api.updateResource(food);
     return result;
   }
+
+  async deleteImage(
+    imageName: string,
+    type: string,
+    id: string,
+  ): Promise<boolean> {
+    const result = await this.api.deleteFoodImage(imageName, type, id);
+    return result;
+  }
 }

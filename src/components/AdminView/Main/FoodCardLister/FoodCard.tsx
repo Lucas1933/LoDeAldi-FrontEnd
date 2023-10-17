@@ -36,7 +36,7 @@ function FoodCard({
         {description}
       </p>
       <div>
-        <div className="mb-4 flex">
+        <div className="mb-4 mr-3 flex items-center justify-center overflow-x-scroll">
           {updatedThumbnails.map((eachThumbnail) => (
             <img
               key={eachThumbnail}

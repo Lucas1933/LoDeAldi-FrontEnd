@@ -21,8 +21,8 @@ function Main({
     newFoodType: false,
   });
   return (
-    <main>
-      <div>
+    <main className="overflow-hidden">
+      <div className="w-[30vh]">
         <CreationButtonsContainer
           handleDisplayModal={setDisplayModal}
           handleModalData={setModalData}

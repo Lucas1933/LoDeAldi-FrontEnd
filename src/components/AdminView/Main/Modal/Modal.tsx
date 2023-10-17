@@ -27,6 +27,7 @@ function Modal({
 }) {
   const [showModal, setShowModal] = useState(displayModal);
   const [showLoading, setShowLoading] = useState(false);
+
   const { newFood, newFoodType, foodToBeEdited, foodTypeToBeEdited } =
     modalData;
 
@@ -46,27 +47,31 @@ function Modal({
           <TEModalContent>
             <TEModalHeader theme={{ wrapper: "bg-body" }}>
               {/* <!--Close button--> */}
-              <button
-                type="button"
-                className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                onClick={() => handleDisplayModal(false)}
-                aria-label="Close"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="h-6 w-6"
+              {foodToBeEdited ? (
+                ""
+              ) : (
+                <button
+                  type="button"
+                  className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                  onClick={() => handleDisplayModal(false)}
+                  aria-label="Close"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              )}
             </TEModalHeader>
             {/* <!--Modal body--> */}
             <TEModalBody theme={{ wrapper: "bg-body" }}>
@@ -103,13 +108,17 @@ function Modal({
             </TEModalBody>
             <TEModalFooter theme={{ wrapper: "bg-body" }}>
               <TERipple rippleColor="light">
-                <button
-                  type="button"
-                  className="bg-primary-100 text-primary-700 hover:bg-primary-accent-100 focus:bg-primary-accent-100 active:bg-primary-accent-200 inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0"
-                  onClick={() => handleDisplayModal(false)}
-                >
-                  Cerrar
-                </button>
+                {foodToBeEdited ? (
+                  ""
+                ) : (
+                  <button
+                    type="button"
+                    className="bg-primary-100 text-primary-700 hover:bg-primary-accent-100 focus:bg-primary-accent-100 active:bg-primary-accent-200 inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0"
+                    onClick={() => handleDisplayModal(false)}
+                  >
+                    Cerrar
+                  </button>
+                )}
               </TERipple>
             </TEModalFooter>
             {showLoading && (

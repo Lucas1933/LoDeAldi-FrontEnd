@@ -75,4 +75,26 @@ export default class ApiCallService {
     }
     return true;
   }
+
+  async deleteFoodImage(
+    imageName: string,
+    type: string,
+    id: string,
+  ): Promise<boolean> {
+    const response = await fetch(
+      this.URL + "/" + type + "/" + imageName + "/" + id,
+      {
+        method: "DELETE",
+      },
+    );
+    if (!response.ok) {
+      // Handle non-OK responses, e.g., by throwing an error or returning null
+      throw new Error(
+        `Failed to delete image from ${
+          this.URL + "/" + type + "/" + imageName + "/" + id
+        }`,
+      );
+    }
+    return true;
+  }
 }

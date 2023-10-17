@@ -21,11 +21,11 @@ export default function FoodCard({ food }: { food: FoodData }) {
   return (
     <>
       <li
-        className="my-2 flex justify-between  border-b-2 border-gray-400
+        className="my-2 flex justify-center  border-b-2 border-gray-400
     border-opacity-40 bg-card-background py-2 text-lg font-medium 
     uppercase leading-normal text-white transition duration-150 ease-in-out"
       >
-        <div className="flex w-[50%]">
+        <div className="flex h-[25vh] w-[25vh] items-center justify-center py-4 ">
           <div ref={placeholderDivImageLoading} className="animate-pulse">
             <span
               className="mx-2 inline-block h-28 w-28  flex-auto animate-pulse cursor-wait
@@ -40,7 +40,7 @@ rounded-lg bg-current p-6 align-middle text-base
             onClick={() => {
               setIsCarouselVisible(true);
             }}
-            className="hidden w-max rounded-xl"
+            className="hidden h-full w-full rounded-xl"
             alt=""
           />
         </div>
