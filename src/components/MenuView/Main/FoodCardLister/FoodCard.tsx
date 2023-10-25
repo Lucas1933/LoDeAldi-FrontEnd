@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import FoodCarousel from "./FoodCarousel";
 export default function FoodCard({ food }: { food: FoodData }) {
   const { name, price, description, thumbnails, type } = food;
-  const [updatedThumbnails, setUpdatedThumbnails] = useState([""]);
+  const [fullUrlThumbnails, setFullUrlThumbnails] = useState([""]);
   const placeholderDivImageLoading = useRef<HTMLDivElement>(null);
   const foodImg = useRef<HTMLImageElement>(null);
   const [isCarouselVisible, setIsCarouselVisible] = useState(false);
@@ -11,12 +11,13 @@ export default function FoodCard({ food }: { food: FoodData }) {
     foodImg.current?.classList.remove("hidden");
   };
   useEffect(() => {
-    const updatedThumbnails = thumbnails.map((thumbnail) => {
+    const parsedThumbnails = JSON.parse(thumbnails) as string[];
+    const updatedThumbnails = parsedThumbnails.map((thumbnail) => {
       return (
         import.meta.env.VITE_LO_DE_ALDI_API + "food/" + type + "/" + thumbnail
       );
     });
-    setUpdatedThumbnails(updatedThumbnails);
+    setFullUrlThumbnails(updatedThumbnails);
   }, [thumbnails, type]);
   return (
     <>
@@ -35,7 +36,7 @@ rounded-lg bg-current p-6 align-middle text-base
           </div>
           <img
             ref={foodImg}
-            src={updatedThumbnails[0]}
+            src={fullUrlThumbnails[0]}
             onLoad={() => handleImageLoaded()}
             onClick={() => {
               setIsCarouselVisible(true);
@@ -59,7 +60,7 @@ rounded-lg bg-current p-6 align-middle text-base
       {isCarouselVisible && (
         <FoodCarousel
           setIsCarouselVisible={setIsCarouselVisible}
-          images={updatedThumbnails}
+          images={fullUrlThumbnails}
         />
       )}
     </>
