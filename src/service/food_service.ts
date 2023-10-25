@@ -22,8 +22,8 @@ export default class FoodService {
     return result;
   }
 
-  async updateFood(food: FoodData): Promise<boolean> {
-    const result = await this.api.updateResource(food);
+  async updateFood(form: FormData): Promise<boolean> {
+    const result = await this.api.updateResource(form);
     return result;
   }
 

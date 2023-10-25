@@ -1,6 +1,6 @@
 import { foodTypeService, foodService } from "@service/index.ts";
 import { TEInput, TERipple } from "tw-elements-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function NewFoodForm({
   handleShowLoading,
@@ -12,13 +12,38 @@ export default function NewFoodForm({
   handleIsResourceChanged(isResourceChanged: { hasChanged: boolean }): void;
 }) {
   const [types, setTypes] = useState<FoodTypeData[]>([]);
-  const [formInputData, setFormInputData] = useState<FormData>(new FormData());
+  const [inputData, setInputData] = useState<FoodDataForInsertion>({
+    description: "",
+    name: "",
+    price: 0,
+    thumbnails: [],
+    type: "",
+  });
+  const [files, setFiles] = useState<FileList | null>(null);
 
+  const [formInputData, setFormInputData] = useState<FormData>(new FormData());
+  const selectFileRef = useRef<HTMLInputElement>(null);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleShowLoading(true);
-
+    formInputData.set("type", inputData.type);
+    formInputData.set("name", inputData.name);
+    formInputData.set("price", String(inputData.price));
+    formInputData.set("description", inputData.description);
+    for (let i = 0; i < files!.length; i++) {
+      formInputData.append("thumbnails", files![i]);
+    }
     await foodService.createFood(formInputData);
+    setFiles(null);
+    setFormInputData(new FormData());
+    setInputData({
+      description: "",
+      name: "",
+      price: 0,
+      thumbnails: [],
+      type: "",
+    });
+    selectFileRef.current!.value = "";
     handleIsResourceChanged({ hasChanged: true });
     handleShowLoading(false);
     handleDisplayModal(false);
@@ -31,17 +56,14 @@ export default function NewFoodForm({
   ) => {
     const files = (event.target as HTMLInputElement).files;
     if (files) {
-      for (let i = 0; i < files.length; i++) {
-        formInputData.append("thumbnails", files[i]);
-      }
+      setFiles(files);
     } else {
       const { name, value } = event.target;
-      if (!formInputData.get("type") || name == "type") {
-        formInputData.set("type", types[0].type);
+      if (!inputData.type || name == "type") {
+        inputData.type = types[0].type;
       }
-      formInputData.set(name, value);
+      setInputData({ ...inputData, [name]: value });
     }
-    setFormInputData(formInputData);
   };
 
   useEffect(() => {
@@ -59,6 +81,7 @@ export default function NewFoodForm({
         onChange={onFieldChange}
         required
         name="name"
+        value={inputData.name}
         type="text"
         theme={{
           input:
@@ -74,6 +97,7 @@ export default function NewFoodForm({
           input:
             "peer text-white block min-h-[auto] w-full rounded border-0 bg-transparent outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary motion-reduce:transition-none placeholder:opacity-0 disabled:bg-neutral-100 read-only:bg-neutral-100 dark:disabled:bg-neutral-700 dark:read-only:bg-neutral-700 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary	",
         }}
+        value={inputData.price}
         name="price"
         type="number"
         label="Precio"
@@ -84,6 +108,7 @@ export default function NewFoodForm({
         <textarea
           onChange={onFieldChange}
           required
+          value={inputData.description}
           name="description"
           className="focus:border-primary peer block min-h-[auto] w-full rounded border-2 border-solid bg-transparent px-3 py-[0.32rem] leading-[1.6] text-white outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 motion-reduce:transition-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200"
           id="exampleFormControlTextarea13"
@@ -127,6 +152,7 @@ export default function NewFoodForm({
         <input
           name="thumbnails"
           onChange={onFieldChange}
+          ref={selectFileRef}
           className="focus:border-primary focus:shadow-te-primary dark:focus:border-primary relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:text-neutral-700 focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100"
           type="file"
           accept="image/png, image/jpeg, image/jpg"

@@ -3,8 +3,9 @@ type FoodData = {
   name: string;
   price: number;
   description: string;
-  thumbnails: string[];
+  thumbnails: string;
   type: string;
+  [key: string]: string | number | string[];
 };
 type FileListArray = FileList & {
   // Add any additional properties or methods if needed

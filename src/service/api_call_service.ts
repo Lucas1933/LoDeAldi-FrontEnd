@@ -61,14 +61,27 @@ export default class ApiCallService {
     return true;
   }
 
-  async updateResource<T>(resourceBody: T): Promise<boolean> {
-    const response = await fetch(this.URL, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json", // Modify this header if needed
-      },
-      body: JSON.stringify(resourceBody),
-    });
+  async updateResource<T>(
+    resourceBody: T | FormData,
+    headers?: { [key: string]: string },
+  ): Promise<boolean> {
+    let response;
+    if (!headers) {
+      headers = {};
+    }
+    if (resourceBody instanceof FormData) {
+      response = await fetch(this.URL, {
+        method: "PUT",
+        headers,
+        body: resourceBody,
+      });
+    } else {
+      response = await fetch(this.URL, {
+        method: "PUT",
+        headers,
+        body: JSON.stringify(resourceBody),
+      });
+    }
     if (!response.ok) {
       // Handle non-OK responses, e.g., by throwing an error or returning null
       throw new Error(`Failed to fetch data from ${this.URL}`);

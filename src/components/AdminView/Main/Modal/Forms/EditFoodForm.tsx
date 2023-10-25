@@ -16,11 +16,16 @@ export default function EditFoodForm({
   handleDisplayModal(displayModal: boolean): void;
   handleIsResourceChanged(isResourceChanged: { hasChanged: boolean }): void;
 }) {
-  const [formInputData, setFormInputData] = useState<FoodData>({
-    ...foodToBeEdited,
-  });
+  const [formInputData, setFormInputData] = useState<FormData>(new FormData());
+  const [inputData, setInputData] = useState<FoodData>({ ...foodToBeEdited });
+  const [clearInput, setClearInput] = useState({ clear: false });
+  console.log(inputData);
+  const [files, setFiles] = useState<FileList | null>(null);
+  const [foodThumbnails, setFoodThumbnails] = useState<string[]>(
+    JSON.parse(foodToBeEdited.thumbnails),
+  );
   const [types, setTypes] = useState<FoodTypeData[]>([]);
-  const [updatedThumbnails, setUpdatedThumbnails] = useState([]);
+  const [fullUrlThumbnails, setFullUrlThumbnails] = useState<string[]>([]);
   const [imgsToDelete, setImgsToDelete] = useState<string[]>([]);
   const thumbnailsDivRef = useRef<HTMLDivElement>(null);
   const [
@@ -29,9 +34,10 @@ export default function EditFoodForm({
   ] = useState<EventTarget & HTMLImageElement>();
   const deleteImgModalRef = useRef<HTMLDivElement>(null);
   const imgToBeDeletedRef = useRef<HTMLImageElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   let deleteConfirmationClicks = 0;
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    let notRemovedThumbnails;
     event.preventDefault();
     handleShowLoading(true);
     for (const eachImg of imgsToDelete) {
@@ -41,11 +47,31 @@ export default function EditFoodForm({
         foodToBeEdited._id,
       );
     }
-    const removedThumbnails = formInputData.thumbnails.filter(
-      (eachImg) => !imgsToDelete.includes(eachImg),
-    );
-    formInputData.thumbnails = removedThumbnails;
+
+    if (imgsToDelete.length != 0) {
+      notRemovedThumbnails = foodThumbnails.filter(
+        (eachImg) => !imgsToDelete.includes(eachImg),
+      );
+    } else {
+      notRemovedThumbnails = foodThumbnails;
+    }
+
+    formInputData.set("type", inputData.type);
+    formInputData.set("name", inputData.name);
+    formInputData.set("thumbnails", JSON.stringify(notRemovedThumbnails));
+    formInputData.set("_id", inputData._id);
+    formInputData.set("price", String(inputData.price));
+    formInputData.set("description", inputData.description);
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        formInputData.append("thumbnailsFilesToUpdate", files[i]);
+      }
+    }
+
     await foodService.updateFood(formInputData);
+    setFormInputData(new FormData());
+    setFiles(null);
+    fileInputRef.current!.value = "";
     handleIsResourceChanged({ hasChanged: true });
     handleShowLoading(false);
     handleDisplayModal(false);
@@ -56,8 +82,16 @@ export default function EditFoodForm({
       | React.ChangeEvent<HTMLTextAreaElement>
       | React.ChangeEvent<HTMLSelectElement>,
   ) => {
-    const { name, value } = event.target;
-    setFormInputData({ ...formInputData, [name]: value });
+    const files = (event.target as HTMLInputElement).files;
+    if (files) {
+      setFiles(files);
+    } else {
+      const { name, value } = event.target;
+      if (!inputData.type || name == "type") {
+        inputData.type = types[0].type;
+      }
+      setInputData({ ...inputData, [name]: value });
+    }
   };
   const onDelete = async () => {
     deleteConfirmationClicks++;
@@ -66,7 +100,8 @@ export default function EditFoodForm({
     }
     if (deleteConfirmationClicks == 2) {
       handleShowLoading(true);
-      await foodService.deleteFood(formInputData._id);
+      await foodService.deleteFood(inputData._id);
+      setFormInputData(new FormData());
       handleIsResourceChanged({ hasChanged: true });
       handleShowLoading(false);
       handleDisplayModal(false);
@@ -102,20 +137,23 @@ export default function EditFoodForm({
     }
     getTypes();
   }, []);
-
   useEffect(() => {
-    setUpdatedThumbnails([""]);
-    const updatedThumbnails = foodToBeEdited.thumbnails.map((imgName) => {
+    setInputData({ ...foodToBeEdited });
+    setFoodThumbnails(JSON.parse(foodToBeEdited.thumbnails));
+  }, [foodToBeEdited, clearInput]);
+  useEffect(() => {
+    console.log("thumnbails effect");
+    const fullUrlThumbnails = foodThumbnails.map((imgName) => {
       return (
         import.meta.env.VITE_LO_DE_ALDI_API +
         "food/" +
-        foodToBeEdited.type +
+        inputData.type +
         "/" +
         imgName
       );
     });
-    setUpdatedThumbnails(updatedThumbnails);
-  }, [foodToBeEdited.thumbnails, foodToBeEdited.type]);
+    setFullUrlThumbnails(fullUrlThumbnails);
+  }, [foodThumbnails, inputData]);
 
   return (
     <>
@@ -126,6 +164,10 @@ export default function EditFoodForm({
           className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
           onClick={() => {
             handleDisplayModal(false);
+            setFormInputData(new FormData());
+            setFiles(null);
+            fileInputRef.current!.value = "";
+            setClearInput({ clear: true });
             const images = Array.from(thumbnailsDivRef.current!.children);
             images.forEach((eachImg) => {
               eachImg.classList.remove("hidden");
@@ -153,9 +195,9 @@ export default function EditFoodForm({
       <form onSubmit={handleSubmit}>
         <TEInput
           onChange={onFieldChange}
+          value={inputData.name}
           name="name"
           type="text"
-          value={formInputData.name}
           label="Nombre"
           className="mb-6 mt-2 text-white"
         ></TEInput>
@@ -164,14 +206,14 @@ export default function EditFoodForm({
           name="price"
           type="number"
           label="Precio"
-          value={formInputData.price}
+          value={inputData.price}
           className="mb-6 text-white"
         ></TEInput>
         <TEInput
           onChange={onFieldChange}
           name="description"
           type="text"
-          value={formInputData.description}
+          value={inputData.description}
           label="Descripcion"
           className="mb-6 text-white"
         ></TEInput>
@@ -189,11 +231,11 @@ export default function EditFoodForm({
             className="form-select focus:border-primary dark:focus:border-primary relative m-0 block w-[1px] min-w-0 flex-auto rounded-r border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6]  text-white outline-none transition duration-200 ease-in-out focus:z-[3] focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder:text-neutral-200"
             id="inputGroupSelect01"
           >
-            <option className="text-white" value={formInputData.type}>
-              {formInputData.type}
+            <option className="text-white" value={inputData.type}>
+              {inputData.type}
             </option>
             {types.map((eachType) => {
-              if (eachType.type != formInputData.type) {
+              if (eachType.type != inputData.type) {
                 return (
                   <option key={eachType._id} value={eachType.type}>
                     {eachType.type}
@@ -209,7 +251,7 @@ export default function EditFoodForm({
           ref={thumbnailsDivRef}
           className="my-3 flex w-full  items-center justify-center overflow-x-scroll border-2 border-white p-3"
         >
-          {updatedThumbnails.map((eachThumbnail) => (
+          {fullUrlThumbnails.map((eachThumbnail) => (
             <img
               onClick={onImgClick}
               key={eachThumbnail}
@@ -219,7 +261,22 @@ export default function EditFoodForm({
             />
           ))}
         </div>
-
+        <div className="mb-3 w-96">
+          <label
+            htmlFor="thumbnailsFilesToUpdate"
+            className="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
+          ></label>
+          <input
+            name="thumbnailsFilesToUpdate"
+            ref={fileInputRef}
+            onChange={onFieldChange}
+            className="focus:border-primary focus:shadow-te-primary dark:focus:border-primary relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:text-neutral-700 focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100"
+            type="file"
+            accept="image/png, image/jpeg, image/jpg"
+            id="thumbnailsFilesToUpdate"
+            multiple
+          />
+        </div>
         <TERipple rippleColor="light" className="w-full">
           <button
             type="submit"
@@ -244,6 +301,10 @@ export default function EditFoodForm({
           className="bg-primary-100  text-primary-700 hover:bg-primary-accent-100 focus:bg-primary-accent-100 active:bg-primary-accent-200 inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0"
           onClick={() => {
             handleDisplayModal(false);
+            setFormInputData(new FormData());
+            setFiles(null);
+            setClearInput({ clear: true });
+            fileInputRef.current!.value = "";
             const images = Array.from(thumbnailsDivRef.current!.children);
             images.forEach((eachImg) => {
               eachImg.classList.remove("hidden");

@@ -10,14 +10,15 @@ function FoodCard({
   handleModalData(modalData: ModalData): void;
 }) {
   const { name, price, description, thumbnails, type } = food;
-  const [updatedThumbnails, setUpdatedThumbnails] = useState([""]);
+  const [fullUrlThumbnails, setFullUrlThumbnails] = useState([""]);
   useEffect(() => {
-    const updatedThumbnails = thumbnails.map((thumbnail) => {
+    const parsedFoodThumbnails = JSON.parse(thumbnails) as string[];
+    const updatedThumbnails = parsedFoodThumbnails.map((imgName) => {
       return (
-        import.meta.env.VITE_LO_DE_ALDI_API + "food/" + type + "/" + thumbnail
+        import.meta.env.VITE_LO_DE_ALDI_API + "food/" + type + "/" + imgName
       );
     });
-    setUpdatedThumbnails(updatedThumbnails);
+    setFullUrlThumbnails(updatedThumbnails);
   }, [thumbnails, type]);
 
   return (
@@ -37,7 +38,7 @@ function FoodCard({
       </p>
       <div>
         <div className="mb-4 mr-3 flex items-center justify-center overflow-x-scroll">
-          {updatedThumbnails.map((eachThumbnail) => (
+          {fullUrlThumbnails.map((eachThumbnail) => (
             <img
               key={eachThumbnail}
               className="w-[15vh] rounded-t-lg"
